@@ -1,23 +1,72 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+
+#mybatis配置
+mybatis:
+  #mapper.xml位置
+  mapper-locations: classpath:mapper/*.xml
+
 spring:
+  #模版缓存关闭
+  thymeleaf:
+    cache: false
+
+  #数据库mysql8配置
+  datasource:
+    url: jdbc:mysql://rm-bp1n4l8b76qf5z4e2zo.mysql.rds.aliyuncs.com:3306/stevending?serverTimezone=UTC&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
+    username: stevending
+    password: slyWOAINI1314
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: select 1 from dual
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      test-on-borrow: true
+
   # 发送邮件配置
   mail:
-    host: smtp.qq.com # 配置 smtp 服务器地址
-    port: 587 # smtp 服务器的端口
-    username: 1244910580@qq.com # 配置邮箱用户名(你的邮箱地址)
-    password: ncuqxbrqxliahchf # 配置申请到的授权码(刚让复制的授权码)
-#    host: mail.asiainfo.com # 配置 smtp 服务器地址
-#    port: 587 # smtp 服务器的端口
-#    username: dinggang@asiainfo.com # 配置邮箱用户名(你的邮箱地址)
-#    password: slyWOAINI1314 # 配置申请到的授权码(刚让复制的授权码)
-    default-encoding: UTF-8 # 配置邮件编码
+    host: smtp.qq.com
+    port: 587
+    username: 1244910580@qq.com
+    password: ncuqxbrqxliahchf
+    from: 1244910580@qq.com
+    default-encoding: UTF-8
     properties:
       mail:
         smtp:
           socketFactoryClass: javax.net.ssl.SSLSocketFactory # 配饰 SSL 加密工厂
 #        debug: true
-    from: 1244910580@qq.com # 发送方邮件，在yml中可方便更改
-logging:
-  level:
-    root: INFO
-server:
-  port: 8081
+#    备份邮箱
+#    host: mail.asiainfo.com # 配置 smtp 服务器地址
+#    port: 587 # smtp 服务器的端口
+#    username: dinggang@asiainfo.com # 配置邮箱用户名(你的邮箱地址)
+#    password: slyWOAINI1314 # 配置申请到的授权码(刚让复制的授权码)
+
+
+swagger:
+  base-package: com.xwtec.ec
+  title: API Document
+  description: API Document
+  terms-of-service-url: http://www.xwsoft.com.cn/
+  contact: 025-84669966
+  version: 1.0
+
+test:
+  encrypt:
+    privateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDB8ddWlwj4nYJucCoc14h/OSyqX4vT9VeVLgGxLjSiEIHhNFNIZhRopCDF8eA50+dUzZb15ZnHsqsPKA4U2rQfjlquY1xG0iwZg3kG5857znseRk8AD7fkVK/4eUaIwgqZJ2gDLovmIC7ca3M1HoyHYNx7fesCMp6tIwVwx2BxEdV8RhPnlhY1QOU7BYcCZZqudl6hUhghNsIDOVyhiR1LbSPt+9nXB0/3yVmFN5RoXJprjexEyje7V5YUKivGoQcxWaHTKzSbkNixfND5VRBKHBdpBf1Uym9LVG6jbaAQiR5V/4qh3wEiztyFZ5I9Lnzv3xKR7Cr0DhTngj1la6bjAgMBAAECggEBALSGMZSN3XHc2u2FRg22qX0ScPrdGMBgm/dl7XlIswEvMFW5aNP5AIIuU7ssWzQ4hBkxjJSx9KQnMIZZGFJdCFBfJxUvs1LQiu/sqpi86DvhhEQ32Y0LFHZaRbmY2Qiu5UKNpYlgqCO6TSQqeAA3wUK57ECegkN3bq9l68iALMrQ2EGuxpywEIFJYU0Y3KcK1Pg0AFIYnx9hSdUFtE3BDIZPct+ch+Q4xLnjVksG5e0mIsRzEKtmRzntzAmXZj4lBg8KZNH+HoZ89FD0YxRxRzujQt7Ra78HN2yzayustap9RurscYrKXeMU1KqtRz/5fKvPw52TgN60b/zc49nwpiECgYEA9DZFS7OJASnykQVkpObLK83eNl6/fF+3CFo/nPIg6F80KdlfVffQZmK4ONoTMpC906/VOj184dRy3zA59oWFTo3pYGP2zutDat/5qDDu1XXr8KHFIsCpyJ4iWGVk94M2b4S1SMfQd0X0rwX+7qTJ7YBY79tqCkxDa3VSWRQaBMkCgYEAy05qxQy8EyIcVjaksd1CzvMWvaZOA6vxjFxfgqb/9DscLMme9anQfJPVNUFkQA0Z6a4TK0hcqKqEXpAxkyAcA59qkMxumgajAr9FYqzm3WaSPYPdBetHNReXoMIxcY4TDGI7/ssox/dQGlAfMvqZIeQWIZUmL9rGT7NqQ2rKQEsCgYBapYJXNQ7XlcBpv/y5kMk9Oy8OM2EUQ1rnCMiv8tfwKNZt6jeO62s5dc83mwqhLESpvIyDD6u5D2iMG5SIQstWeypzEufbqkvd8cDzgyZDqX+oVAOegLEEvF23PfuaO+QKxNGdcD2a6CaIiMs1vYkOVSOt9F2J8QDddDDay7FUsQKBgEBLnmyO6HPMl9WUFmXBqb01F34GuCllGVDgbbwuAEhG4VQwtzrN54deYVEkSwYOnqFOUfWgPt2Af7hANc1nnDRxGAyO+nNvoeHeh5z7PU/LfnhB2YZjr/NUcLmAcI6O9es2re6YZV9IEWcg65z9r6wOLAmW16rOr2TJQtPrU+cdAoGAaBuQKkTHRiAtOXnz/2TEL3IBl6ioKrsh/aYroaMBOPP0B1qayZ3ecYOhCnYAFYl+jYS79MYaDH8IaF1ZkUkeOVI9uRP4fGdqSuVznoqdJiiY3f1iZ+eoWhghZ3iNOGR2uunklTTpKWKSFyZRJhlZU5tllPLQbgzsFQBoV4xLLrw=
+
+
+
+
+
+
+
+
+

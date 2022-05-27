@@ -17,7 +17,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 
-
 @Component
 public class DingTalkUtil {
 
@@ -74,22 +73,6 @@ public class DingTalkUtil {
         byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
         return baseUrl + token + "&timestamp=" + timestamp + "&sign=" +
                 URLEncoder.encode(new String(Base64.encodeBase64(signData)), "UTF-8");
-    }
-
-
-    public static String getToken() {
-//        try {
-//            DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/gettoken");
-//            OapiGettokenRequest req = new OapiGettokenRequest();
-//            req.setAppkey("dingp1yqs8n7zahffoyu");
-//            req.setAppsecret("Y8BJOu-tQlFVW2mssL3MpfmOqfYRfZebRee27O5VAY6jD6-n56XBuZ_M7gcjGBTu");
-//            req.setHttpMethod("GET");
-//            OapiGettokenResponse rsp = client.execute(req);
-//            System.out.println(rsp.getBody());
-//        } catch (ApiException e) {
-//            e.printStackTrace();
-//        }
-        return "";
     }
 
 }
