@@ -8,6 +8,7 @@ import com.learn.robot.enums.ServiceExceptionEnum;
 import com.learn.robot.mapper.LoginUserMapper;
 import com.learn.robot.service.LoginService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +35,14 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public LoginUser getUserById(String id) throws ServiceException {
-        if("2".equals(id)){
+        if(StringUtils.isBlank(id)){
             throw RobotException.serviceException(ServiceExceptionEnum.LACK_PARAMS);
         }
-        return loginUserMapper.selectByIds(id).get(0);
+        List<LoginUser> userList= loginUserMapper.selectByIds(id);
+        if (CollectionUtils.isNotEmpty(userList)) {
+            return userList.get(0);
+        }
+        return new LoginUser();
     }
 
 

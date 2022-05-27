@@ -1,4 +1,4 @@
-package com.learn.robot.config;
+package com.learn.robot.advice;
 
 import com.learn.robot.Exception.ServiceException;
 import com.learn.robot.model.Response;
