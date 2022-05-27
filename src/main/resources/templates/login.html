@@ -1,0 +1,30 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+<button id="btn">发送验证码</button>
+<script type="text/javascript">
+	var oBtn = document.getElementById("btn")
+	// 初始化时间
+	var time = 10
+	oBtn.onclick = function(){
+		this.disabled = true
+		sendCode()
+	}
+	function sendCode(){
+		time--
+		console.log(time)
+		oBtn.innerHTML = time+"s后重发"
+		if(time>1){
+			setTimeout(sendCode,1000)
+		}else{
+			oBtn.innerHTML = "发送验证码"
+			oBtn.disabled = false
+			time = 10
+		}
+	}
+</script>
+</body>
+</html>

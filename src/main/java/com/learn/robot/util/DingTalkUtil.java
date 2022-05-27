@@ -2,6 +2,7 @@ package com.learn.robot.util;
 
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -9,7 +10,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Component;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
@@ -17,9 +17,21 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 
-
+@Slf4j
 @Component
 public class DingTalkUtil {
+
+    private static String url = "";
+
+    //初始化url地址
+    static {
+        try {
+            url = getSign();
+            log.info(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**
@@ -40,7 +52,8 @@ public class DingTalkUtil {
             at.put("isAtAll", isAtAll);
             jsonObject.put("at", at);
             HttpClient httpClient = HttpClients.createDefault();
-            HttpPost httpPost = new HttpPost(getSign());
+//            HttpPost httpPost = new HttpPost(getSign());
+            HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Content-Type", "application/json; charset=utf-8");
             httpPost.setEntity(new StringEntity(jsonObject.toJSONString(), "utf-8"));
             HttpResponse execute = httpClient.execute(httpPost);
@@ -74,22 +87,6 @@ public class DingTalkUtil {
         byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
         return baseUrl + token + "&timestamp=" + timestamp + "&sign=" +
                 URLEncoder.encode(new String(Base64.encodeBase64(signData)), "UTF-8");
-    }
-
-
-    public static String getToken() {
-//        try {
-//            DingTalkClient client = new DefaultDingTalkClient("https://oapi.dingtalk.com/gettoken");
-//            OapiGettokenRequest req = new OapiGettokenRequest();
-//            req.setAppkey("dingp1yqs8n7zahffoyu");
-//            req.setAppsecret("Y8BJOu-tQlFVW2mssL3MpfmOqfYRfZebRee27O5VAY6jD6-n56XBuZ_M7gcjGBTu");
-//            req.setHttpMethod("GET");
-//            OapiGettokenResponse rsp = client.execute(req);
-//            System.out.println(rsp.getBody());
-//        } catch (ApiException e) {
-//            e.printStackTrace();
-//        }
-        return "";
     }
 
 }

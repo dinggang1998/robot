@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>你好</h1>
+<div class="col-sm-7">
+    <label>所有用户</label>
+    <select name="person_name" class="form-control">
+        <option value="">全部</option>
+        <option th:each="t:${userList}" th:value="${t.id}" th:text="${t.username}" ></option>
+    </select>
+</div>
+</body>
+
+</html>

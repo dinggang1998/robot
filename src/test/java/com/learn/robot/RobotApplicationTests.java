@@ -1,19 +1,24 @@
 package com.learn.robot;
 
-import com.learn.robot.util.DingTalkUtil;
-import com.learn.robot.util.EmailUtil;
+import com.learn.robot.mapper.LoginUserMapper;
+import com.learn.robot.domain.LoginUser;
+import com.learn.robot.service.LoginService;
+import com.learn.robot.util.*;
+import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.File;
+import java.util.List;
 
-@SpringBootTest
-//@SpringBootTest(classes = RobotApplication.class)
+
 @Slf4j
-class RobotApplicationTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = RobotApplication.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+public class RobotApplicationTests extends TestCase {
 
     @Autowired
     private EmailUtil emailUtil;
@@ -32,7 +37,7 @@ class RobotApplicationTests {
 
 
     @Test
-    void sendStringEmail() {
+    public void sendStringEmail() {
         // 测试文本邮件发送（无附件）
         String to = "zhufangyue@qq.com";
         String title = "你好呀猪猪猪";
@@ -41,18 +46,18 @@ class RobotApplicationTests {
     }
 
     @Test
-    void sendFileEmail() {
+    public void sendFileEmail() {
         // 测试单个附件邮件发送
-        String to = "1244910580@qq.com";
-        String title = "你好呀猪猪猪";
-        String content = "啦啦啦啦啦";
+        String to = "fyzhu@che300.com";
+        String title = "你好呀猪猪猪！！！！！";
+        String content = "啦啦啦啦啦！！！！！！！";
         File file = new File("/Users/dinggang/Downloads/td_s_light_item.sql");
         System.out.println(file);
         emailUtil.sendMessageCarryFile(to, title, content, file);
     }
 
     @Test
-    void sendFilesEmail() {
+    public void sendFilesEmail() {
         // 测试多个附件邮件发送
         String to = "1354720990@qq.com";
         String title = "多个附件邮件发送测试";
@@ -61,6 +66,19 @@ class RobotApplicationTests {
         files[0] = new File("C:\\Users\\root\\Desktop\\配置邮箱\\1.png");
         files[1] = new File("C:\\Users\\root\\Desktop\\配置邮箱\\2.png");
 //        emailUtil.sendMessageCarryFile(to, title, content, files);
+    }
+
+
+    @Autowired
+    LoginService loginService;
+
+    @Autowired
+    LoginUserMapper loginUserMapper;
+
+    @Test
+    public void test3(){
+        List<LoginUser> userList= loginUserMapper.selectAll();
+        System.out.println(userList.get(0).toString());
     }
 
 }

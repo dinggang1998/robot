@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 @Component
 @Configuration
-class DingDingSch {
+class DingTalkScheduled {
 
     @Autowired
     EmailUtil emailUtil;
