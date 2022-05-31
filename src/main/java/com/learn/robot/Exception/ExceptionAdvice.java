@@ -1,25 +1,25 @@
 package com.learn.robot.advice;
 
+
 import com.learn.robot.Exception.ServiceException;
 import com.learn.robot.model.Response;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * @Description:抛出业务异常
  */
+@Slf4j
 @RestController
 @ControllerAdvice
 public class ExceptionAdvice {
 
-    public static Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 
     @ResponseBody
     @ExceptionHandler(ServiceException.class)
@@ -28,16 +28,18 @@ public class ExceptionAdvice {
         if (e instanceof ServiceException) {
             response.setCode(((ServiceException) e).getCode());
         }
-        response.setMessage("业务异常信息："+e.getMessage());
+        response.setMessage("业务异常：["+e.getMessage()+ "] ");
+        log.error("业务异常："+e.getMessage(),e);
         return response;
     }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
-    public Response handleException(RuntimeException e) {
+    public Response handleException(RuntimeException e, HttpServletRequest request) {
         Response response = new Response();
         response.setCode("500");
-        response.setMessage("系统异常："+e.getMessage());
+        response.setMessage("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
+        log.error("系统内部错误："+e.getMessage(),e);
         return response;
     }
 
@@ -59,5 +61,6 @@ public class ExceptionAdvice {
         dataBinder.registerCustomEditor(Date.class,
                 new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), false));
     }
+
 
 }

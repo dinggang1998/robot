@@ -26,7 +26,7 @@ import java.security.PrivateKey;
  * @return
  **/
 @Slf4j
-@ControllerAdvice(basePackages = "com.learn.robot")
+@ControllerAdvice(basePackages = "com.learn.robot.controller")
 public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
 
@@ -54,19 +54,16 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
     @Override
     public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType,
                                            Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
-
         try {
             boolean encode = false;
             if (parameter.getMethod().isAnnotationPresent(RsaSecurityParameter.class)) {
-//                log.info("对方法method :【" + parameter.getMethod().getName() + "】返回数据进行解密");
-                //获取注解配置的包含和去除字段
+                //获取注解配置的包含和去除字段,判断入参是否需要解密
                 RsaSecurityParameter serializedField = parameter.getMethodAnnotation(RsaSecurityParameter.class);
-                //入参是否需要解密
                 encode = serializedField.inDecode();
             }
             if (encode) {
-//                log.info("对方法method :【" + parameter.getMethod().getName() + "】返回数据进行解密");
-                return new DecryptHttpInputMessage(inputMessage, privateKey, "utf-8");
+                log.info("对方法method :【" + parameter.getMethod().getName() + "】返回数据进行解密");
+                return DecryptRequestBodyAdvice(inputMessage, privateKey, "utf-8");
             }else{
                 return inputMessage;
             }
@@ -78,22 +75,13 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
     }
 
-}
 
-@Slf4j
-class DecryptHttpInputMessage implements HttpInputMessage {
 
-    private HttpHeaders headers;
-    private InputStream body;
 
-    public DecryptHttpInputMessage(HttpInputMessage inputMessage, String privateKey, String charset) throws Exception {
-
+    private HttpInputMessage DecryptRequestBodyAdvice(HttpInputMessage inputMessage, String privateKey, String charset) throws Exception{
         if(StringUtils.isEmpty(privateKey)){
             throw new IllegalArgumentException("privateKey is null");
         }
-//        log.info("=======>privateKey:{}",privateKey);
-        //获取请求内容
-        this.headers = inputMessage.getHeaders();
         String content = IOUtils.toString(inputMessage.getBody(), charset);
 
         //未加密数据不进行解密操作
@@ -101,10 +89,8 @@ class DecryptHttpInputMessage implements HttpInputMessage {
         if (content.startsWith("{")) {
             decryptBody = content;
         } else {
-//            log.info("=======>解密");
             StringBuilder json = new StringBuilder();
             content = content.replaceAll(" ", "+");
-
             if (!StringUtils.isEmpty(content)) {
                 String[] contents = content.split("\\|");
                 for (int k = 0; k < contents.length; k++) {
@@ -119,16 +105,25 @@ class DecryptHttpInputMessage implements HttpInputMessage {
             }
             decryptBody = json.toString();
         }
-        this.body = IOUtils.toInputStream(decryptBody, charset);
+
+        HttpInputMessage httpInputMessage=new HttpInputMessage() {
+
+            @Override
+            public InputStream getBody() throws IOException {
+                return IOUtils.toInputStream(decryptBody, charset);
+            }
+
+            @Override
+            public HttpHeaders getHeaders() {
+                return inputMessage.getHeaders();
+            }
+        };
+        return httpInputMessage;
     }
 
-    @Override
-    public InputStream getBody() throws IOException {
-        return body;
-    }
-
-    @Override
-    public HttpHeaders getHeaders() {
-        return headers;
-    }
 }
+
+
+
+
+

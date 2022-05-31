@@ -65,6 +65,12 @@ swagger:
   version: 1.0
 
 
+resource-server:
+  enable: true
+  load-resource-authority: false
+  white-list: /api/v1/**
+  exception-code: 2003,100
+
 
 
 

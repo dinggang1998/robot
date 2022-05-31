@@ -13,8 +13,6 @@ import java.io.File;
 /**
  * @ClassName EmailUtil
  * @Description 邮件发送工具
- * @Author Sophia
- * @Date 2022/4/6 16:06
  */
 @Component
 public class EmailUtil {

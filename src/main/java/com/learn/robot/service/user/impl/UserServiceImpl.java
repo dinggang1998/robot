@@ -1,12 +1,12 @@
-package com.learn.robot.service.impl;
+package com.learn.robot.service.user.impl;
 
 import com.learn.robot.Exception.RobotException;
 import com.learn.robot.Exception.ServiceException;
-import com.learn.robot.dao.LoginUserMapperExt;
+import com.learn.robot.dao.UserMapperExt;
 import com.learn.robot.domain.LoginUser;
 import com.learn.robot.enums.ServiceExceptionEnum;
-import com.learn.robot.mapper.LoginUserMapper;
-import com.learn.robot.service.LoginService;
+import com.learn.robot.mapper.UserMapper;
+import com.learn.robot.service.user.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    private LoginUserMapperExt loginUserMapperExt;
+    private UserMapperExt userMapperExt;
 
     @Autowired
-    LoginUserMapper loginUserMapper;
+    UserMapper userMapper;
 
     @Override
     public  List<LoginUser> getUserList(){
-        List<LoginUser> userList= loginUserMapperExt.getUserList();
+        List<LoginUser> userList= userMapperExt.getUserList();
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList;
         }
@@ -38,7 +38,7 @@ public class LoginServiceImpl implements LoginService {
         if(StringUtils.isBlank(id)){
             throw RobotException.serviceException(ServiceExceptionEnum.LACK_PARAMS);
         }
-        List<LoginUser> userList= loginUserMapper.selectByIds(id);
+        List<LoginUser> userList= userMapper.selectByIds(id);
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList.get(0);
         }

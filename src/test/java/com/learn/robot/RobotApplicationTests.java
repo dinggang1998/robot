@@ -1,8 +1,8 @@
 package com.learn.robot;
 
-import com.learn.robot.mapper.LoginUserMapper;
+import com.learn.robot.mapper.UserMapper;
 import com.learn.robot.domain.LoginUser;
-import com.learn.robot.service.LoginService;
+import com.learn.robot.service.user.UserService;
 import com.learn.robot.util.*;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
@@ -70,14 +70,14 @@ public class RobotApplicationTests extends TestCase {
 
 
     @Autowired
-    LoginService loginService;
+    UserService userService;
 
     @Autowired
-    LoginUserMapper loginUserMapper;
+    UserMapper userMapper;
 
     @Test
     public void test3(){
-        List<LoginUser> userList= loginUserMapper.selectAll();
+        List<LoginUser> userList= userMapper.selectAll();
         System.out.println(userList.get(0).toString());
     }
 

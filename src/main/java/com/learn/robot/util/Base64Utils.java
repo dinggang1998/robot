@@ -142,6 +142,7 @@ public class Base64Utils {
     /**
      * 用户名解密
      *
+     * @param str
      * @return
      */
     public static String getFromBase64(String s) {

@@ -1,50 +1,59 @@
 package com.learn.robot.controller;
 
-
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.learn.robot.Exception.ServiceException;
 import com.learn.robot.aspect.ApiLog;
+import com.learn.robot.aspect.Login;
 import com.learn.robot.aspect.RsaSecurityParameter;
-import com.learn.robot.domain.LoginUser;
+import com.learn.robot.domain.User;
 import com.learn.robot.model.Response;
-import com.learn.robot.service.LoginService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.learn.robot.service.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import javax.servlet.http.HttpServletRequest;
 
-@Api("用户信息")
-@RestController
-@RequestMapping("/")
+
 @Slf4j
+@RestController
+@RequestMapping(value = "/api/v1/login")
 public class LoginController {
 
     @Autowired
     LoginService loginService;
 
-    @ApiOperation("获取所有用户信息")
-    @RequestMapping(value = "/getUserList", method = RequestMethod.POST)
-    public List<LoginUser> getUserList() {
-        return loginService.getUserList();
+    @ApiLog(description = "登录网厅")
+    @RsaSecurityParameter
+    @RequestMapping(value = "/loginBusinessHall", method = RequestMethod.POST)
+    public Response<User> loginBusinessHall(HttpServletRequest request, @RequestBody String jsonStr) throws ServiceException, Exception {
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+        String username = jsonObject.get("username") == null ? "" : jsonObject.get("username").toString();
+        String pwd = jsonObject.get("pwd") == null ? "" : jsonObject.get("pwd").toString();
+        log.info("loginBusinessHall | Entry the method. username = {}, pwd = {}", username, pwd);
+
+        User user = loginService.loginBusinessHall(username, pwd);
+        loginService.reGenerateSessionId(request);
+
+        request.getSession().setAttribute("User", user);
+        request.getSession().removeAttribute("userId");
+        return Response.success(user);
     }
 
-    @ApiOperation("根据id获取用户信息")
-    @ApiLog(description = "根据id获取用户信息")
-    @PostMapping("/getUserById")
-    @RsaSecurityParameter(outEncode = true)
-    public Response<LoginUser> getUserById(@RequestBody String id) throws ServiceException {
-        return Response.success(loginService.getUserById(id));
+    @ApiLog(description = "退出登录")
+    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
+    public Response logOut(HttpServletRequest request) throws Exception {
+        request.getSession().removeAttribute("User");
+        return Response.success();
     }
 
-    @ApiOperation("根据id获取用户信息")
-    @ApiLog(description = "根据id获取用户信息")
-    @PostMapping("/getUserByIdRSA")
-    @RsaSecurityParameter(inDecode = true,outEncode = true)
-    public Response<LoginUser> getUserByIdRSA(@RequestBody String jsonStr) throws ServiceException,Exception {
-        LoginUser loginUser = JSON.parseObject(jsonStr, LoginUser.class);
-        return Response.success(loginService.getUserById(loginUser.getId()));
-    }
 
+    @Login
+    @ApiLog(description = "")
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public Response<String> test(HttpServletRequest request) throws Exception {
+        return Response.success("1");
+    }
 }

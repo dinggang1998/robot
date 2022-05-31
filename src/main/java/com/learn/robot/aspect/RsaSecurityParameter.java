@@ -13,7 +13,7 @@ public @interface RsaSecurityParameter {
     /**
      * 入参是否解密，默认不解密
      */
-    boolean inDecode() default false;
+    boolean inDecode() default true;
 
     /**
      * 出参是否加密，默认不加密

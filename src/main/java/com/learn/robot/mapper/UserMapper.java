@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface LoginUserMapper extends MyMapper<LoginUser> {
+public interface UserMapper extends MyMapper<LoginUser> {
 
     @Select("select * from steven_user")
     List<LoginUser> getUserList();

@@ -5,7 +5,7 @@ import com.learn.robot.domain.LoginUser;
 
 import java.util.List;
 
-public interface LoginUserMapperExt {
+public interface UserMapperExt {
 
     List<LoginUser> getUserList();
 
