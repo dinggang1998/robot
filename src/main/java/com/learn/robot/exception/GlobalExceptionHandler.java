@@ -1,4 +1,4 @@
-package com.learn.robot.Exception;
+package com.learn.robot.exception;
 
 import com.learn.robot.enums.ServiceExceptionEnum;
 import com.learn.robot.model.Response;
@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
+
+/**
+ * 前台项目code返回String类型，中台项目返回int类型
+ * 同时前台项目业务异常码使用白名单规则
+ * */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {

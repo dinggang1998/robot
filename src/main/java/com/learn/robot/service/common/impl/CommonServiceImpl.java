@@ -2,8 +2,8 @@ package com.learn.robot.service.common.impl;
 
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.learn.robot.Exception.RobotException;
-import com.learn.robot.Exception.ServiceException;
+import com.learn.robot.exception.RobotException;
+import com.learn.robot.exception.ServiceException;
 import com.learn.robot.enums.ServiceExceptionEnum;
 import com.learn.robot.service.common.CommonService;
 import com.learn.robot.util.Base64Utils;
@@ -16,7 +16,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;

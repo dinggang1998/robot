@@ -1,9 +1,8 @@
 package com.learn.robot.service.common;
 
 
-import com.learn.robot.Exception.ServiceException;
+import com.learn.robot.exception.ServiceException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 

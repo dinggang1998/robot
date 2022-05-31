@@ -159,8 +159,5 @@ public class Response<T> {
             return new Response(this.code, this.message, this.data);
         }
 
-        public String toString() {
-            return "Response.ResponseBuilder(code=" + this.code + ", message=" + this.message + ", data=" + this.data + ")";
-        }
     }
 }

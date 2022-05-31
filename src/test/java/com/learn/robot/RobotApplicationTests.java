@@ -1,17 +1,21 @@
 package com.learn.robot;
 
+import com.alibaba.fastjson.JSONObject;
 import com.learn.robot.mapper.UserMapper;
 import com.learn.robot.domain.LoginUser;
+import com.learn.robot.model.Response;
 import com.learn.robot.service.user.UserService;
 import com.learn.robot.util.*;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.io.File;
+import java.security.PublicKey;
 import java.util.List;
 
 
@@ -80,5 +84,20 @@ public class RobotApplicationTests extends TestCase {
         List<LoginUser> userList= userMapper.selectAll();
         System.out.println(userList.get(0).toString());
     }
+
+
+
+    @Value("${spring.encrypt.publicKey}")
+    String publicKey;
+
+    public Response<String> serect(JSONObject jsonObject) throws Exception {
+        log.info("=======>加密前:{}", jsonObject);
+        PublicKey publicKey1 = RSAUtils.string2PublicKey(publicKey);
+        byte[] publicEncrypt = RSAUtils.publicEncrypt(jsonObject.toString().getBytes(), publicKey1);
+        String byte2Base64 = RSAUtils.byte2Base64(publicEncrypt);
+        log.info("=======>加密后:{}", byte2Base64);
+        return Response.success(byte2Base64);
+    }
+
 
 }

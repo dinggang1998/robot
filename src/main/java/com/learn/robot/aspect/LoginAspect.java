@@ -1,6 +1,6 @@
 package com.learn.robot.aspect;
 
-import com.learn.robot.Exception.RobotException;
+import com.learn.robot.exception.RobotException;
 import com.learn.robot.domain.User;
 import com.learn.robot.enums.ServiceExceptionEnum;
 import lombok.extern.slf4j.Slf4j;

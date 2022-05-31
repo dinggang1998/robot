@@ -1,7 +1,7 @@
 package com.learn.robot.advice;
 
 
-import com.learn.robot.Exception.ServiceException;
+import com.learn.robot.exception.ServiceException;
 import com.learn.robot.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.propertyeditors.CustomDateEditor;

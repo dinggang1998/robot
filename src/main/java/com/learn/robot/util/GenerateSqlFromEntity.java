@@ -10,7 +10,8 @@ import java.util.Map;
 /**
  * 通过实体类生成建表语句
  */
-public class GenerateSqlFromEntity2 {
+@SuppressWarnings("AliEqualsAvoidNull")
+public class GenerateSqlFromEntity {
     //
     public static Map<String, String> javaProperty2SqlColumnMap = new HashMap<>();
 

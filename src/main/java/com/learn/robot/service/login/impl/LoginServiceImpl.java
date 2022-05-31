@@ -1,7 +1,7 @@
 package com.learn.robot.service.login.impl;
 
-import com.learn.robot.Exception.RobotException;
-import com.learn.robot.Exception.ServiceException;
+import com.learn.robot.exception.RobotException;
+import com.learn.robot.exception.ServiceException;
 import com.learn.robot.domain.User;
 import com.learn.robot.enums.ServiceExceptionEnum;
 import com.learn.robot.mapper.LoginMapper;
@@ -104,6 +104,8 @@ public class LoginServiceImpl implements LoginService {
                 throw RobotException.serviceException(ServiceExceptionEnum.USER_IS_LOCK);
             case "2":
                 throw RobotException.serviceException(ServiceExceptionEnum.USER_IS_COLD);
+            default:
+                break;
         }
     }
 

@@ -1,6 +1,6 @@
 package com.learn.robot.service.user;
 
-import com.learn.robot.Exception.ServiceException;
+import com.learn.robot.exception.ServiceException;
 import com.learn.robot.domain.LoginUser;
 
 import java.util.List;

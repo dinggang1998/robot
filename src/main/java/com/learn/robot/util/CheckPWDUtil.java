@@ -1,7 +1,7 @@
 package com.learn.robot.util;
 
-import com.learn.robot.Exception.RobotException;
-import com.learn.robot.Exception.ServiceException;
+import com.learn.robot.exception.RobotException;
+import com.learn.robot.exception.ServiceException;
 import com.learn.robot.enums.ServiceExceptionEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

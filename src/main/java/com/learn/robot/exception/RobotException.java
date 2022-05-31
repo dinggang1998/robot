@@ -1,4 +1,4 @@
-package com.learn.robot.Exception;
+package com.learn.robot.exception;
 
 
 import com.learn.robot.enums.ServiceExceptionEnum;
