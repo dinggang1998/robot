@@ -20,7 +20,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 /**
  * 前台项目code返回String类型，中台项目返回int类型
  * 同时前台项目业务异常码使用白名单规则
- * */
+ */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {

@@ -8,6 +8,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,8 +29,8 @@ public class ExceptionAdvice {
         if (e instanceof ServiceException) {
             response.setCode(((ServiceException) e).getCode());
         }
-        response.setMessage("业务异常：["+e.getMessage()+ "] ");
-        log.error("业务异常："+e.getMessage(),e);
+        response.setMessage("业务异常：[" + e.getMessage() + "] ");
+        log.error("业务异常：" + e.getMessage(), e);
         return response;
     }
 
@@ -39,13 +40,13 @@ public class ExceptionAdvice {
         Response response = new Response();
         response.setCode("500");
         response.setMessage("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
-        log.error("系统内部错误："+e.getMessage(),e);
+        log.error("系统内部错误：" + e.getMessage(), e);
         return response;
     }
 
 
     @InitBinder
-    public void processParam(WebDataBinder dataBinder){
+    public void processParam(WebDataBinder dataBinder) {
         /*
          * 创建一个字符串微调编辑器
          * 参数{boolean emptyAsNull}: 是否把空字符串("")视为 null

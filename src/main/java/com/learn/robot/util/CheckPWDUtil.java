@@ -232,18 +232,18 @@ public class CheckPWDUtil {
                 String revOrderStr = new StringBuffer(KEYBOARD_HORIZONTAL_ARR[j]).reverse().toString();
 
                 //检测包含字母(区分大小写)
-                    //考虑 大写键盘匹配的情况
-                    String UpperStr = KEYBOARD_HORIZONTAL_ARR[j].toUpperCase();
-                    if ((configStr.indexOf(distinguishStr) != -1) || (UpperStr.indexOf(distinguishStr) != -1)) {
-                        flag = true;
-                        return flag;
-                    }
-                    //考虑逆序输入情况下 连续输入
-                    String revUpperStr = new StringBuffer(UpperStr).reverse().toString();
-                    if ((revOrderStr.indexOf(distinguishStr) != -1) || (revUpperStr.indexOf(distinguishStr) != -1)) {
-                        flag = true;
-                        return flag;
-                    }
+                //考虑 大写键盘匹配的情况
+                String UpperStr = KEYBOARD_HORIZONTAL_ARR[j].toUpperCase();
+                if ((configStr.indexOf(distinguishStr) != -1) || (UpperStr.indexOf(distinguishStr) != -1)) {
+                    flag = true;
+                    return flag;
+                }
+                //考虑逆序输入情况下 连续输入
+                String revUpperStr = new StringBuffer(UpperStr).reverse().toString();
+                if ((revOrderStr.indexOf(distinguishStr) != -1) || (revUpperStr.indexOf(distinguishStr) != -1)) {
+                    flag = true;
+                    return flag;
+                }
 
             }
         }
@@ -274,18 +274,18 @@ public class CheckPWDUtil {
                 String revOrderStr = new StringBuffer(KEYBOARD_SLOPE_ARR[j]).reverse().toString();
                 //检测包含字母(区分大小写)
 
-                    //考虑 大写键盘匹配的情况
-                    String UpperStr = KEYBOARD_SLOPE_ARR[j].toUpperCase();
-                    if ((configStr.indexOf(distinguishStr) != -1) || (UpperStr.indexOf(distinguishStr) != -1)) {
-                        flag = true;
-                        return flag;
-                    }
-                    //考虑逆序输入情况下 连续输入
-                    String revUpperStr = new StringBuffer(UpperStr).reverse().toString();
-                    if ((revOrderStr.indexOf(distinguishStr) != -1) || (revUpperStr.indexOf(distinguishStr) != -1)) {
-                        flag = true;
-                        return flag;
-                    }
+                //考虑 大写键盘匹配的情况
+                String UpperStr = KEYBOARD_SLOPE_ARR[j].toUpperCase();
+                if ((configStr.indexOf(distinguishStr) != -1) || (UpperStr.indexOf(distinguishStr) != -1)) {
+                    flag = true;
+                    return flag;
+                }
+                //考虑逆序输入情况下 连续输入
+                String revUpperStr = new StringBuffer(UpperStr).reverse().toString();
+                if ((revOrderStr.indexOf(distinguishStr) != -1) || (revUpperStr.indexOf(distinguishStr) != -1)) {
+                    flag = true;
+                    return flag;
+                }
             }
         }
         return flag;
@@ -303,7 +303,7 @@ public class CheckPWDUtil {
         int normal_count = 0;
         int reversed_count = 0;
 
-            t_password = t_password.toLowerCase();
+        t_password = t_password.toLowerCase();
         int n = t_password.length();
         char[] pwdCharArr = t_password.toCharArray();
 

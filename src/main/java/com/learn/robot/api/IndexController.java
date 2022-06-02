@@ -1,4 +1,4 @@
-package com.learn.robot.controller;
+package com.learn.robot.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

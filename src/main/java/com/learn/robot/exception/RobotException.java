@@ -9,11 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 public class RobotException {
 
     public static ServiceException serviceException(ServiceExceptionEnum exceptionEnum) {
-        return new ServiceException(String.valueOf(exceptionEnum.getCode()), exceptionEnum.getMessage(),exceptionEnum.getMessageEn());
+        return new ServiceException(String.valueOf(exceptionEnum.getCode()), exceptionEnum.getMessage(), exceptionEnum.getMessageEn());
     }
 
     public static ServiceException serviceExceptionByResponse(Response response) {
-        return new ServiceException(response.getCode(), response.getMessage(),response.getMessage());
+        return new ServiceException(response.getCode(), response.getMessage(), response.getMessage());
     }
 
 }

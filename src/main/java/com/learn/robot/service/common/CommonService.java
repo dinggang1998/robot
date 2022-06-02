@@ -16,7 +16,7 @@ public interface CommonService {
     /**
      * 获取图片验证码
      */
-    Map<String, Object>  defaultKaptcha() throws ServiceException,Exception;
+    Map<String, Object> defaultKaptcha() throws ServiceException, Exception;
 
     /**
      * 校验图片验证码

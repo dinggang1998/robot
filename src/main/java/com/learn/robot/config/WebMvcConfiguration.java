@@ -1,7 +1,7 @@
 //package com.learn.robot.config;
 //
 //import com.alibaba.fastjson.JSON;
-//import com.learn.robot.Exception.ServiceException;
+//import com.learn.robot.exception.ServiceException;
 //import com.learn.robot.model.Response;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.context.annotation.Configuration;

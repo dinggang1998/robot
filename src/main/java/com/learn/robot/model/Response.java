@@ -28,7 +28,7 @@ public class Response<T> {
     }
 
     public static Response success() {
-        return new Response((Object)null);
+        return new Response((Object) null);
     }
 
     public static Response success(Object data) {
@@ -70,11 +70,12 @@ public class Response<T> {
         } else if (!(o instanceof Response)) {
             return false;
         } else {
-            Response<?> other = (Response)o;
+            Response<?> other = (Response) o;
             if (!other.canEqual(this)) {
                 return false;
             } else {
-                label47: {
+                label47:
+                {
                     Object this$code = this.getCode();
                     Object other$code = other.getCode();
                     if (this$code == null) {

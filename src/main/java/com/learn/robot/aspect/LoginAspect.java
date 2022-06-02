@@ -11,6 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
@@ -20,7 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginAspect {
 
     @Pointcut("@annotation(com.learn.robot.aspect.Login)")
-    public void login() {}
+    public void login() {
+    }
 
     /**
      * 在切点之前织入
@@ -31,7 +33,7 @@ public class LoginAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         User user = (User) request.getSession().getAttribute("User");
-        if(user == null){
+        if (user == null) {
             throw RobotException.serviceException(ServiceExceptionEnum.USER_NO_LOGIN);
         }
     }

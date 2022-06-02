@@ -2,6 +2,7 @@ package com.learn.robot.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -14,7 +15,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-//    @SequenceGenerator(name = "SEQ_CTG_USER", sequenceName = "SEQ_CTG_USER")
+    //    @SequenceGenerator(name = "SEQ_CTG_USER", sequenceName = "SEQ_CTG_USER")
     private String id;
 
     @Id

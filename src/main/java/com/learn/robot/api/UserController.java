@@ -1,4 +1,4 @@
-package com.learn.robot.controller;
+package com.learn.robot.api;
 
 
 import com.alibaba.fastjson.JSON;
@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Api("用户信息")
@@ -41,8 +42,8 @@ public class UserController {
     @ApiOperation("根据id获取用户信息")
     @ApiLog(description = "根据id获取用户信息")
     @PostMapping("/getUserByIdRSA")
-    @RsaSecurityParameter(inDecode = true,outEncode = true)
-    public Response<LoginUser> getUserByIdRSA(@RequestBody String jsonStr) throws ServiceException,Exception {
+    @RsaSecurityParameter(inDecode = true, outEncode = true)
+    public Response<LoginUser> getUserByIdRSA(@RequestBody String jsonStr) throws ServiceException, Exception {
         LoginUser loginUser = JSON.parseObject(jsonStr, LoginUser.class);
         return Response.success(userService.getUserById(loginUser.getId()));
     }

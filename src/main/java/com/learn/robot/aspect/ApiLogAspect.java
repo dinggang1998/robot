@@ -27,10 +27,12 @@ public class ApiLogAspect {
 
 
     @Pointcut("@annotation(com.learn.robot.aspect.ApiLog)")
-    public void apiLog() {}
+    public void apiLog() {
+    }
 
     /**
      * 在切点之前织入
+     *
      * @param joinPoint
      * @throws Throwable
      */
@@ -54,6 +56,7 @@ public class ApiLogAspect {
 
     /**
      * 环绕
+     *
      * @param proceedingJoinPoint
      * @return
      * @throws Throwable
@@ -70,6 +73,7 @@ public class ApiLogAspect {
 
     /**
      * 获取切面注解的描述
+     *
      * @param joinPoint 切点
      * @return 描述信息
      * @throws Exception

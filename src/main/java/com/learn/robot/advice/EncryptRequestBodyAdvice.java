@@ -58,7 +58,7 @@ public class EncryptRequestBodyAdvice implements ResponseBodyAdvice {
     }
 
 
-    public Object EncryptHttpOutputMessage(Object body, String publicKey, String charset)throws Exception {
+    public Object EncryptHttpOutputMessage(Object body, String publicKey, String charset) throws Exception {
 
         if (StringUtils.isEmpty(publicKey)) {
             throw new IllegalArgumentException("publicKey is null");
@@ -73,7 +73,7 @@ public class EncryptRequestBodyAdvice implements ResponseBodyAdvice {
             String byte2Base64 = RSAUtils.byte2Base64(publicEncrypt);
             log.info("=======>加密后:{}", byte2Base64);
             response.setData(byte2Base64);
-            return (Object)response;
+            return (Object) response;
         }
         return body;
     }

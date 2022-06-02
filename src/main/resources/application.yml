@@ -57,18 +57,18 @@ spring:
 
 
 swagger:
-  base-package: com.xwtec.ec
-  title: API Document
-  description: API Document
-  terms-of-service-url: http://www.xwsoft.com.cn/
-  contact: 025-84669966
+  base-package: com.learn.robot.api
+  title: 小叮当的项目接口文档
+  description: 官网建设中
+  terms-of-service-url: http://www.baidu.com/
+  contact: 15861334359
   version: 1.0
 
 
 resource-server:
   enable: true
   load-resource-authority: false
-  white-list: /api/v1/**
+  white-list: /api/v1/**,/swagger-resources/**
   exception-code: 2003,100
 
 

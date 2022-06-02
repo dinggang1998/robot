@@ -20,6 +20,7 @@ import java.util.Map;
 /**
  * Author: StevenDing
  * Description: 二维码生成工具类
+ *
  * @author 40274
  */
 
@@ -38,16 +39,11 @@ public class QRCodeUtil {
     /**
      * 生成二维码
      *
-     * @param text
-     *            二维码内容
-     * @param width
-     *            二维码宽
-     * @param height
-     *            二维码高
-     * @param outPutPath
-     *            二维码生成保存路径
-     * @param imageType
-     *            二维码生成格式
+     * @param text       二维码内容
+     * @param width      二维码宽
+     * @param height     二维码高
+     * @param outPutPath 二维码生成保存路径
+     * @param imageType  二维码生成格式
      */
     public static String zxingCodeCreate(String text, int width, int height, String outPutPath, String imageType) {
         Map<EncodeHintType, String> his = new HashMap<EncodeHintType, String>();

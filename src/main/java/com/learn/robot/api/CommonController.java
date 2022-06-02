@@ -1,4 +1,4 @@
-package com.learn.robot.controller;
+package com.learn.robot.api;
 
 
 import com.alibaba.fastjson.JSONObject;
@@ -11,12 +11,14 @@ import com.learn.robot.service.common.CommonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 
 /**
  * 公共接口
+ *
  * @author StevenDing
  */
 @Slf4j
@@ -28,7 +30,6 @@ public class CommonController {
     private CommonService commonService;
 
 
-
     /**
      * 获取静态验证码
      * <img width="40" height="30" src="data:image/jpg;base64,***"/>图片展示
@@ -37,8 +38,8 @@ public class CommonController {
     @SuppressWarnings({"rawtypes"})
     @RequestMapping(value = "/captcha/kaptcha", method = RequestMethod.POST)
     public Response<Map<String, Object>> defaultKaptcha(HttpServletRequest request) throws ServiceException, Exception {
-        Map<String, Object> resultMap= new HashMap<>();
-        resultMap=commonService.defaultKaptcha();
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap = commonService.defaultKaptcha();
         return Response.success(resultMap);
     }
 

@@ -19,13 +19,13 @@ class DingTalkScheduled {
     EmailUtil emailUtil;
 
     //@Scheduled(cron = "0/2 * * * * ?")
-    public void test1(){
+    public void test1() {
         log.info("=========进入定时");
         String message = "### 这是一个标题111\n" +
                 "#### 这是正文内容\n" +
                 "#### 这是正文内容\n" +
                 "#### 这是正文内容\n";
-        String res = DingTalkUtil.postWithJson("test",message,false);
+        String res = DingTalkUtil.postWithJson("test", message, false);
     }
 
 //    @Scheduled(cron = "0/2 * * * * ?")

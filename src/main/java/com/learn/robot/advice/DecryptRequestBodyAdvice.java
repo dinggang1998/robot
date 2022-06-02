@@ -13,6 +13,7 @@ import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.RequestBodyAdvice;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -21,7 +22,7 @@ import java.security.PrivateKey;
 
 /**
  * @MethodName: 请求请求处理类（目前仅仅对requestbody有效）
- *  * 对加了@Decrypt的方法的数据进行解密密操作
+ * * 对加了@Decrypt的方法的数据进行解密密操作
  * @Param
  * @return
  **/
@@ -64,22 +65,20 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             if (encode) {
                 log.info("对方法method :【" + parameter.getMethod().getName() + "】返回数据进行解密");
                 return DecryptRequestBodyAdvice(inputMessage, privateKey, "utf-8");
-            }else{
+            } else {
                 return inputMessage;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("对方法method :【" + parameter.getMethod().getName() + "】返回数据进行解密出现异常："+e.getMessage());
+            log.error("对方法method :【" + parameter.getMethod().getName() + "】返回数据进行解密出现异常：" + e.getMessage());
             return inputMessage;
         }
 
     }
 
 
-
-
-    private HttpInputMessage DecryptRequestBodyAdvice(HttpInputMessage inputMessage, String privateKey, String charset) throws Exception{
-        if(StringUtils.isEmpty(privateKey)){
+    private HttpInputMessage DecryptRequestBodyAdvice(HttpInputMessage inputMessage, String privateKey, String charset) throws Exception {
+        if (StringUtils.isEmpty(privateKey)) {
             throw new IllegalArgumentException("privateKey is null");
         }
         String content = IOUtils.toString(inputMessage.getBody(), charset);
@@ -95,18 +94,18 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                 String[] contents = content.split("\\|");
                 for (int k = 0; k < contents.length; k++) {
                     String value = contents[k];
-                    log.info("=======>解密前:{}",value);
+                    log.info("=======>解密前:{}", value);
                     PrivateKey privateKey1 = RSAUtils.string2PrivateKey(privateKey);
                     value = new String(RSAUtils.privateDecrypt(Base64Utils.decode(value), privateKey1), charset);
-                    String de_value = URLDecoder.decode(value,"UTF-8");
-                    log.info("=======>解密后:{}",de_value);
+                    String de_value = URLDecoder.decode(value, "UTF-8");
+                    log.info("=======>解密后:{}", de_value);
                     json.append(de_value);
                 }
             }
             decryptBody = json.toString();
         }
 
-        HttpInputMessage httpInputMessage=new HttpInputMessage() {
+        HttpInputMessage httpInputMessage = new HttpInputMessage() {
 
             @Override
             public InputStream getBody() throws IOException {

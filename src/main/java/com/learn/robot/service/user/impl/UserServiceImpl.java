@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
-    public  List<LoginUser> getUserList(){
-        List<LoginUser> userList= userMapperExt.getUserList();
+    public List<LoginUser> getUserList() {
+        List<LoginUser> userList = userMapperExt.getUserList();
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList;
         }
@@ -35,10 +35,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public LoginUser getUserById(String id) throws ServiceException {
-        if(StringUtils.isBlank(id)){
+        if (StringUtils.isBlank(id)) {
             throw RobotException.serviceException(ServiceExceptionEnum.LACK_PARAMS);
         }
-        List<LoginUser> userList= userMapper.selectByIds(id);
+        List<LoginUser> userList = userMapper.selectByIds(id);
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList.get(0);
         }

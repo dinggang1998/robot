@@ -20,7 +20,7 @@ public class ServiceException extends RuntimeException {
         super(message);
     }
 
-    public ServiceException(String code, String message,String message_en) {
+    public ServiceException(String code, String message, String message_en) {
         super(message);
         this.code = code;
         this.message_en = message_en;
@@ -35,7 +35,7 @@ public class ServiceException extends RuntimeException {
     }
 
     public ServiceException(String message, Throwable cause,
-                                boolean enableSuppression, boolean writableStackTrace) {
+                            boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

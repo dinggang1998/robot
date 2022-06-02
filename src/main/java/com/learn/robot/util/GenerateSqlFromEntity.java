@@ -28,7 +28,7 @@ public class GenerateSqlFromEntity {
     }
 
     //
-    public static String createTable( Class obj, String tableName ) throws IOException {
+    public static String createTable(Class obj, String tableName) throws IOException {
         Field[] fields = null;
         fields = obj.getDeclaredFields();
         String param = null;
@@ -51,7 +51,7 @@ public class GenerateSqlFromEntity {
 
         boolean firstId = true;
 
-        for ( Field f : fields ) {
+        for (Field f : fields) {
             column = f.getName();
 
             if (column.equals("serialVersionUID")) {
@@ -59,10 +59,10 @@ public class GenerateSqlFromEntity {
             }
 
             param = f.getType().getSimpleName();
-            stb.append( "    " + column );     // 一般第一个是主键
+            stb.append("    " + column);     // 一般第一个是主键
 
             stb.append(" ");
-            stb.append( javaProperty2SqlColumnMap.get(param) );
+            stb.append(javaProperty2SqlColumnMap.get(param));
 
 			/*if (param instanceof Integer) {
 	                stb.append(" INTEGER ");
@@ -116,11 +116,11 @@ public class GenerateSqlFromEntity {
     }
 
     // main
-    public static void main( String[] args ) throws IOException {
+    public static void main(String[] args) throws IOException {
         String tableName = "user";
-        String re = createTable( User.class, tableName );
+        String re = createTable(User.class, tableName);
 
-        System.out.println( re );
+        System.out.println(re);
     }
 
 }

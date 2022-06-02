@@ -35,11 +35,11 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public HttpSession getSession() throws Exception {
-        return  ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
     }
 
     @Override
-    public Map<String, Object> defaultKaptcha() throws ServiceException,Exception{
+    public Map<String, Object> defaultKaptcha() throws ServiceException, Exception {
         Map<String, Object> resultMap = new HashMap<>();
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
         HttpSession session = commonService.getSession();
@@ -70,7 +70,7 @@ public class CommonServiceImpl implements CommonService {
         }
         log.info("codeVerify | sessionID code :" + sessionId);
         HttpSession session = commonService.getSession();
-               ;
+        ;
         //这里是得到相应的验证码a
         String kaptchaExpected = (String) session.getAttribute(sessionId);
         log.info("codeVerify | kaptchaExpected = {}", kaptchaExpected);
