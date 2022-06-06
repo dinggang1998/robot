@@ -3,7 +3,7 @@
 <mapper namespace="com.learn.robot.dao.DzUserMapperExt">
 
     <select id="getUserList" resultType="com.learn.robot.model.user.DzUser">
-        select * from steven_user
+        select * from dz_user
     </select>
 
 </mapper>

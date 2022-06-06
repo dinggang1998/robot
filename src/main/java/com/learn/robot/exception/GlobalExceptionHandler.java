@@ -32,12 +32,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleGlobalException(Exception e) {
         log.error(e.getMessage(), e);
         if (e instanceof ServiceException) {
-            if (ArrayUtils.contains(resourceProperties.getExceptionCode(), ((ServiceException) e).getCode())) {
-                return ResponseEntity.status(HttpStatus.OK).body(new Response(((ServiceException) e).getCode(), e.getMessage(), null));
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(String.valueOf(ServiceExceptionEnum.INTERNAL_SERVER_ERROR.getCode()), ServiceExceptionEnum.INTERNAL_SERVER_ERROR.getMessage(), null));
-            }
-//            return ResponseEntity.status(HttpStatus.OK).body(new Response(((ServiceException) e).getCode(), e.getMessage(), null));
+//            if (ArrayUtils.contains(resourceProperties.getExceptionCode(), ((ServiceException) e).getCode())) {
+//                return ResponseEntity.status(HttpStatus.OK).body(new Response(((ServiceException) e).getCode(), e.getMessage(), null));
+//            } else {
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(String.valueOf(ServiceExceptionEnum.INTERNAL_SERVER_ERROR.getCode()), ServiceExceptionEnum.INTERNAL_SERVER_ERROR.getMessage(), null));
+//            }
+            return ResponseEntity.status(HttpStatus.OK).body(new Response(((ServiceException) e).getCode(), e.getMessage(), null));
         } else if (e instanceof SQLIntegrityConstraintViolationException || e instanceof DuplicateKeyException) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(String.valueOf(ServiceExceptionEnum.RESOURCE_EXISTS.getCode()), ServiceExceptionEnum.RESOURCE_EXISTS.getMessage(), null));
         } else if (e instanceof MethodArgumentNotValidException) {

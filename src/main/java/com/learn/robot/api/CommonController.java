@@ -8,6 +8,7 @@ import com.learn.robot.aspect.RsaSecurityParameter;
 import com.learn.robot.model.Response;
 import com.learn.robot.model.login.UuidToken;
 import com.learn.robot.service.common.CommonService;
+import com.learn.robot.util.AESEUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -63,4 +64,15 @@ public class CommonController {
     }
 
 
+    /**
+     * 测试加密
+     */
+    @ApiLog(description = "加密")
+    @RequestMapping(value = "/serect", method = RequestMethod.POST)
+    public Response<String> serect(HttpServletRequest request, @RequestBody JSONObject jsonObject) throws Exception {
+        log.info("=======>加密前:{}", jsonObject);
+        String message = AESEUtils.encrypt(JSONObject.toJSONString(jsonObject));
+        log.info("=======>加密后:{}", message);
+        return Response.success(message);
+    }
 }

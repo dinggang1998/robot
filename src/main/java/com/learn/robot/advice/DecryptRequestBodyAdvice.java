@@ -28,7 +28,7 @@ import java.security.PrivateKey;
  * @return
  **/
 @Slf4j
-@ControllerAdvice(basePackages = "com.learn.robot.controller")
+@ControllerAdvice(basePackages = "com.learn.robot.api")
 public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
 
@@ -58,12 +58,9 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                                            Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
         try {
             boolean encode = false;
-            log.info(String.valueOf(parameter.getMethod().isAnnotationPresent(RsaSecurityParameter.class)));
             if (parameter.getMethod().isAnnotationPresent(RsaSecurityParameter.class)) {
                 //获取注解配置的包含和去除字段,判断入参是否需要解密
                 RsaSecurityParameter serializedField = parameter.getMethodAnnotation(RsaSecurityParameter.class);
-                log.info(String.valueOf(serializedField.inDecode()));
-
                 encode = serializedField.inDecode();
             }
             if (encode) {
@@ -86,7 +83,6 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
             throw new IllegalArgumentException("privateKey is null");
         }
         String content = IOUtils.toString(inputMessage.getBody(), charset);
-
         //未加密数据不进行解密操作
         String decryptBody;
         if (content.startsWith("{")) {
@@ -127,6 +123,7 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
     }
 
 }
+
 
 
 

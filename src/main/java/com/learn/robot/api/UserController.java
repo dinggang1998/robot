@@ -7,7 +7,6 @@ import com.learn.robot.aspect.RsaSecurityParameter;
 import com.learn.robot.model.Response;
 import com.learn.robot.model.user.DzUser;
 import com.learn.robot.service.user.UserService;
-import com.learn.robot.util.AESEUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -33,22 +32,17 @@ public class UserController {
     @ApiOperation("根据id获取用户信息")
     @ApiLog(description = "根据id获取用户信息")
     @PostMapping("/getUserById")
-    @RsaSecurityParameter(outEncode = true)
+    @RsaSecurityParameter(inDecode = false,outEncode = true)
     public Response<DzUser> getUserById(@RequestBody String id) throws ServiceException {
-
         return Response.success(userService.getUserById(id));
     }
 
     @ApiOperation("根据id获取用户信息")
     @ApiLog(description = "根据id获取用户信息")
-    @PostMapping("/getUserByIdRSA")
-    @RsaSecurityParameter(inDecode = true)
+    @PostMapping("/getUserByUser")
+    @RsaSecurityParameter(outEncode = true)
     public Response<DzUser> getUserByIdRSA(@RequestBody String jsonStr) throws  Exception {
-        log.info(jsonStr);
-        String test=AESEUtils.decrypt(jsonStr);
-        log.info(test);
-
-        DzUser dzUser = JSON.parseObject(test, DzUser.class);
+        DzUser dzUser = JSON.parseObject(jsonStr, DzUser.class);
         return Response.success(userService.getUserById(dzUser.getId()));
     }
 

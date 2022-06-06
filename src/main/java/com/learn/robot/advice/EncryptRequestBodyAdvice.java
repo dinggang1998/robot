@@ -26,7 +26,7 @@ import java.security.PublicKey;
  * @return
  **/
 @Slf4j
-@ControllerAdvice(basePackages = "com.learn.robot")
+@ControllerAdvice(basePackages = "com.learn.robot.api")
 public class EncryptRequestBodyAdvice implements ResponseBodyAdvice {
 
     @Value("${spring.encrypt.publicKey}")
