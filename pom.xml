@@ -130,6 +130,11 @@
             <artifactId>swagger-core</artifactId>
             <version>1.5.20</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.3</version>
+        </dependency>
         <!-- 包装返回数据 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

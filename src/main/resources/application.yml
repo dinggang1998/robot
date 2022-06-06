@@ -60,9 +60,16 @@ swagger:
   base-package: com.learn.robot.api
   title: 小叮当的项目接口文档
   description: 官网建设中
-  terms-of-service-url: http://www.baidu.com/
+  terms-of-service-url: https://github.com/dinggang1998/robot/
   contact: 15861334359
   version: 1.0
+
+  production: false
+  basic:
+    enable: true
+    username: 123456
+    password: 123456
+
 
 
 resource-server:
@@ -70,7 +77,6 @@ resource-server:
   load-resource-authority: false
   white-list: /api/v1/**,/swagger-resources/**
   exception-code: 2003,100
-
 
 
 

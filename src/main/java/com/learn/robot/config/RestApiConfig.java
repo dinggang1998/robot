@@ -1,5 +1,6 @@
 package com.learn.robot.config;
 
+import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 //@ConditionalOnExpression("'${swagger.enable}' == 'true'")
 @Configuration
 @EnableSwagger2
+@EnableSwaggerBootstrapUI
 public class RestApiConfig {
 
     private @Value("${swagger.base-package}")
