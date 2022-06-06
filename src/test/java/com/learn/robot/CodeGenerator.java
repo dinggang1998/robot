@@ -37,8 +37,10 @@ public class CodeGenerator {
         gc.setServiceName("%sService");//设置接口名称是否有I
         gc.setAuthor("Steven Ding");
         gc.setBaseResultMap(true);//xml映射
+        gc.setSwagger2(true);
         gc.setBaseColumnList(true);//sql片段
         gc.setDateType(DateType.ONLY_DATE);
+        gc.setEnableCache(true);
         mpg.setGlobalConfig(gc);
 
         // 2.数据源配置
@@ -65,15 +67,17 @@ public class CodeGenerator {
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setEntityLombokModel(true);//使用lombok
         strategyConfig.setTablePrefix("");
-        strategyConfig.setInclude("DZ_USER");
+        strategyConfig.setInclude("SSSS_USER");
+        strategyConfig.setEntityTableFieldAnnotationEnable(true);
         mpg.setStrategy(strategyConfig);
 
         // 5.包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.learn.robot");
         pc.setMapper("dao");
-        pc.setEntity("model.user");
+        pc.setEntity("model.test");
         pc.setXml("mapper");
+
         mpg.setPackageInfo(pc);
 
         // 6.自定义配置

@@ -34,8 +34,9 @@ public class DzUser extends Model<DzUser> {
     /**
      * id
      */
-@Id
-//    @SequenceGenerator(name = "SEQ_CTG_USER", sequenceName = "SEQ_CTG_USER")
+    //oracle数据库使用此方法插入序列
+    //@SequenceGenerator(name = "SEQ_CTG_USER", sequenceName = "SEQ_CTG_USER")
+    @Id
     private String id;
 
     /**
