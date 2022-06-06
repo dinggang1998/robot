@@ -31,8 +31,6 @@ public class SwaggerConfig {
     String description;
     private @Value("${swagger.terms-of-service-url}")
     String termsOfServiceUrl;
-    private @Value("${swagger.contact}")
-    String contact;
     private @Value("${swagger.name}")
     String name;
     private @Value("${swagger.email}")
