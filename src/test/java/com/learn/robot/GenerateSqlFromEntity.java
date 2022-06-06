@@ -119,7 +119,6 @@ public class GenerateSqlFromEntity {
     public static void main(String[] args) throws IOException {
         String tableName = "user";
         String re = createTable(DzUser.class, tableName);
-
         System.out.println(re);
     }
 
