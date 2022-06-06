@@ -1,6 +1,6 @@
-package com.learn.robot.util;
+package com.learn.robot;
 
-import com.learn.robot.domain.User;
+import com.learn.robot.model.user.DzUser;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -118,7 +118,7 @@ public class GenerateSqlFromEntity {
     // main
     public static void main(String[] args) throws IOException {
         String tableName = "user";
-        String re = createTable(User.class, tableName);
+        String re = createTable(DzUser.class, tableName);
 
         System.out.println(re);
     }

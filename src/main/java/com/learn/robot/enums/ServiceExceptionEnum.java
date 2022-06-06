@@ -36,7 +36,8 @@ public enum ServiceExceptionEnum implements Serializable {
 
     USER_IS_LOCK(2001, "用户锁定！", "用户锁定！"),
     USER_IS_COLD(2002, "用户已冻结！", "用户已冻结"),
-    USER_NO_LOGIN(2003, "用户未登陆", "用户未登陆");
+    USER_NO_LOGIN(2003, "用户未登陆", "用户未登陆"),
+    NO_USER(2004, "用户不存在", "用户不存在");
 
     private int code;
 

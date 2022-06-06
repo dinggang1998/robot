@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 public @interface RsaSecurityParameter {
 
     /**
-     * 入参是否解密，默认不解密
+     * 入参是否解密，默认解密
      */
     boolean inDecode() default true;
 

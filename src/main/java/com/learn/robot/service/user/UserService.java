@@ -1,14 +1,14 @@
 package com.learn.robot.service.user;
 
 import com.learn.robot.exception.ServiceException;
-import com.learn.robot.domain.LoginUser;
+import com.learn.robot.model.user.DzUser;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<LoginUser> getUserList();
+    List<DzUser> getUserList();
 
-    LoginUser getUserById(String id) throws ServiceException;
+    DzUser getUserById(String id) throws ServiceException;
 
 }

@@ -2,10 +2,10 @@ package com.learn.robot.service.user.impl;
 
 import com.learn.robot.exception.RobotException;
 import com.learn.robot.exception.ServiceException;
-import com.learn.robot.dao.UserMapperExt;
-import com.learn.robot.domain.LoginUser;
+import com.learn.robot.dao.DzUserMapperExt;
 import com.learn.robot.enums.ServiceExceptionEnum;
-import com.learn.robot.mapper.UserMapper;
+import com.learn.robot.mapper.DzUserMapper;
+import com.learn.robot.model.user.DzUser;
 import com.learn.robot.service.user.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,14 +19,14 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserMapperExt userMapperExt;
+    private DzUserMapperExt dzUserMapperExt;
 
     @Autowired
-    UserMapper userMapper;
+    DzUserMapper dzUserMapper;
 
     @Override
-    public List<LoginUser> getUserList() {
-        List<LoginUser> userList = userMapperExt.getUserList();
+    public List<DzUser> getUserList() {
+        List<DzUser> userList = dzUserMapperExt.getUserList();
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList;
         }
@@ -34,15 +34,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginUser getUserById(String id) throws ServiceException {
+    public DzUser getUserById(String id) throws ServiceException {
         if (StringUtils.isBlank(id)) {
             throw RobotException.serviceException(ServiceExceptionEnum.LACK_PARAMS);
         }
-        List<LoginUser> userList = userMapper.selectByIds(id);
+        List<DzUser> userList = dzUserMapper.selectByIds(id);
         if (CollectionUtils.isNotEmpty(userList)) {
             return userList.get(0);
         }
-        return new LoginUser();
+        return new DzUser();
     }
 
 

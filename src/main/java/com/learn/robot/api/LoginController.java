@@ -3,10 +3,9 @@ package com.learn.robot.api;
 import com.alibaba.fastjson.JSONObject;
 import com.learn.robot.exception.ServiceException;
 import com.learn.robot.aspect.ApiLog;
-import com.learn.robot.aspect.Login;
 import com.learn.robot.aspect.RsaSecurityParameter;
-import com.learn.robot.domain.User;
 import com.learn.robot.model.Response;
+import com.learn.robot.model.user.DzUser;
 import com.learn.robot.service.login.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +25,16 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
-    @ApiLog(description = "登录网厅")
+    @ApiLog(description = "登录")
     @RsaSecurityParameter
-    @RequestMapping(value = "/loginBusinessHall", method = RequestMethod.POST)
-    public Response<User> loginBusinessHall(HttpServletRequest request, @RequestBody String jsonStr) throws ServiceException, Exception {
+    @RequestMapping(value = "/loginWeb", method = RequestMethod.POST)
+    public Response<DzUser> loginWeb(HttpServletRequest request, @RequestBody String jsonStr) throws ServiceException, Exception {
         JSONObject jsonObject = JSONObject.parseObject(jsonStr);
         String username = jsonObject.get("username") == null ? "" : jsonObject.get("username").toString();
         String pwd = jsonObject.get("pwd") == null ? "" : jsonObject.get("pwd").toString();
         log.info("loginBusinessHall | Entry the method. username = {}, pwd = {}", username, pwd);
 
-        User user = loginService.loginBusinessHall(username, pwd);
+        DzUser user = loginService.loginWeb(username, pwd);
         loginService.reGenerateSessionId(request);
 
         request.getSession().setAttribute("User", user);
@@ -50,11 +49,4 @@ public class LoginController {
         return Response.success();
     }
 
-
-    @Login
-    @ApiLog(description = "")
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public Response<String> test(HttpServletRequest request) throws Exception {
-        return Response.success("1");
-    }
 }

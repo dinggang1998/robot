@@ -1,6 +1,7 @@
 package com.learn.robot.advice;
 
 import com.learn.robot.aspect.RsaSecurityParameter;
+import com.learn.robot.util.AESEUtils;
 import com.learn.robot.util.Base64Utils;
 import com.learn.robot.util.RSAUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -57,9 +58,12 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                                            Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
         try {
             boolean encode = false;
+            log.info(String.valueOf(parameter.getMethod().isAnnotationPresent(RsaSecurityParameter.class)));
             if (parameter.getMethod().isAnnotationPresent(RsaSecurityParameter.class)) {
                 //获取注解配置的包含和去除字段,判断入参是否需要解密
                 RsaSecurityParameter serializedField = parameter.getMethodAnnotation(RsaSecurityParameter.class);
+                log.info(String.valueOf(serializedField.inDecode()));
+
                 encode = serializedField.inDecode();
             }
             if (encode) {
@@ -95,9 +99,11 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
                 for (int k = 0; k < contents.length; k++) {
                     String value = contents[k];
                     log.info("=======>解密前:{}", value);
-                    PrivateKey privateKey1 = RSAUtils.string2PrivateKey(privateKey);
-                    value = new String(RSAUtils.privateDecrypt(Base64Utils.decode(value), privateKey1), charset);
-                    String de_value = URLDecoder.decode(value, "UTF-8");
+//                    第一种解密方法（Data must not be longer than 245 bytes，有限制）
+//                    PrivateKey privateKey1 = RSAUtils.string2PrivateKey(privateKey);
+//                    value = new String(RSAUtils.privateDecrypt(Base64Utils.decode(value), privateKey1), charset);
+//                    String de_value = URLDecoder.decode(value, "UTF-8");
+                    String de_value = AESEUtils.decrypt(value);
                     log.info("=======>解密后:{}", de_value);
                     json.append(de_value);
                 }

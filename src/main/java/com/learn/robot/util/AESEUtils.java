@@ -6,15 +6,15 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/*
+/**
  * AES对称加密和解密
  */
 public class AESEUtils {
 
     //使用AES-128-CBC加密模式，key需要为16位,key和iv可以相同，也可以不同!
-    private static String KEY = "@hcetwx#!lecxetc";
+    private static String KEY = "slyWOAINI314!@#$";
 
-    private static String IV = "@hcetwx#!lecxetc";
+    private static String IV = "slyWOAINI314!@#$";
 
     private static final String CIPHER_ALGORITHM_CBC = "AES/CBC/NoPadding";
 
@@ -104,19 +104,5 @@ public class AESEUtils {
     public static String decrypt(String data) {
         return decrypt(data, KEY, IV);
     }
-
-//    public static String decryMsisdn(String msisdn) {
-//        try{
-//            if(StringUtils.isNotBlank(msisdn)){
-//                msisdn = AESEUtils.decrypt(msisdn);
-//            }
-//        }catch (Exception e){
-//            msisdn = "";
-//            e.printStackTrace();
-//            System.out.println("号码解密失败");
-//        }
-//        return msisdn;
-//    }
-
 
 }

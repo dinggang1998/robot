@@ -9,6 +9,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -20,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @EnableSwaggerBootstrapUI
-public class RestApiConfig {
+public class SwaggerConfig {
 
     private @Value("${swagger.base-package}")
     String basePackage;
@@ -32,6 +33,12 @@ public class RestApiConfig {
     String termsOfServiceUrl;
     private @Value("${swagger.contact}")
     String contact;
+    private @Value("${swagger.name}")
+    String name;
+    private @Value("${swagger.email}")
+    String email;
+    private @Value("${swagger.url}")
+    String url;
     private @Value("${swagger.version}")
     String version;
 
@@ -50,7 +57,7 @@ public class RestApiConfig {
                 .title(title)
                 .description(description)
                 .termsOfServiceUrl(termsOfServiceUrl)
-                .contact(contact)
+                .contact(new Contact(name, url, email))
                 .version(version)
                 .build();
     }

@@ -1,9 +1,9 @@
 package com.learn.robot;
 
 import com.alibaba.fastjson.JSONObject;
-import com.learn.robot.mapper.UserMapper;
-import com.learn.robot.domain.LoginUser;
+import com.learn.robot.mapper.DzUserMapper;
 import com.learn.robot.model.Response;
+import com.learn.robot.model.user.DzUser;
 import com.learn.robot.service.user.UserService;
 import com.learn.robot.util.*;
 import junit.framework.TestCase;
@@ -77,11 +77,11 @@ public class RobotApplicationTests extends TestCase {
     UserService userService;
 
     @Autowired
-    UserMapper userMapper;
+    DzUserMapper dzUserMapper;
 
     @Test
     public void test3(){
-        List<LoginUser> userList= userMapper.selectAll();
+        List<DzUser> userList= dzUserMapper.selectAll();
         System.out.println(userList.get(0).toString());
     }
 

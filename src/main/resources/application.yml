@@ -55,15 +55,18 @@ spring:
 #    username: dinggang@asiainfo.com # 配置邮箱用户名(你的邮箱地址)
 #    password: slyWOAINI1314 # 配置申请到的授权码(刚让复制的授权码)
 
-
+#swagger参数
 swagger:
   base-package: com.learn.robot.api
   title: 小叮当的项目接口文档
   description: 官网建设中
   terms-of-service-url: https://github.com/dinggang1998/robot/
+  name: Steven Ding
+  email: 1244910580@qq.com
   contact: 15861334359
+  url: https://github.com/dinggang1998
   version: 1.0
-
+  #swagger密码
   production: false
   basic:
     enable: true

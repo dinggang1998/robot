@@ -2,9 +2,9 @@ package com.learn.robot.service.login.impl;
 
 import com.learn.robot.exception.RobotException;
 import com.learn.robot.exception.ServiceException;
-import com.learn.robot.domain.User;
 import com.learn.robot.enums.ServiceExceptionEnum;
-import com.learn.robot.mapper.LoginMapper;
+import com.learn.robot.mapper.DzUserMapper;
+import com.learn.robot.model.user.DzUser;
 import com.learn.robot.service.common.CommonService;
 import com.learn.robot.service.login.LoginService;
 import com.learn.robot.util.CheckPWDUtil;
@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,47 +31,52 @@ import java.util.Map;
 public class LoginServiceImpl implements LoginService {
 
     @Autowired
-    LoginMapper loginMapper;
+    CommonService commonService;
 
     @Autowired
-    CommonService commonService;
+    DzUserMapper dzUserMapper;
 
     /**
      * 登录获取使用人的基本信息
      */
     @SuppressWarnings("unused")
     @Override
-    public User loginBusinessHall(String username, String pwd) throws ServiceException, Exception {
+    public DzUser loginWeb(String username, String pwd) throws ServiceException, Exception {
         if (StringUtils.isBlank(username) || StringUtils.isBlank(pwd)) {
             throw RobotException.serviceException(ServiceExceptionEnum.ILLEGAL_PARAM);
         }
-        List<User> userList = loginMapper.getUserByUserName(username);
+        Example example = new Example(DzUser.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username", username);
+        List<DzUser> userList=dzUserMapper.selectByExample(example);
+
         if (CollectionUtils.isNotEmpty(userList)) {
-            User user = userList.get(0);
-            log.info("loginBusinessHall | User info = {}", user);
+            DzUser user = userList.get(0);
+            log.info("User info = {}", user);
+            //判断用户是否冻结或锁定
             dealUserLock(user);
-            //校验输入的密码和数据库的密码是否一致
-            String decrypt_pwd = pwd;
+            //判断用户名密码是否合规
+            CheckPWDUtil.EvalPWD(pwd, username);
+            //密码是否与数据库一致
             pwd = Md5Encrypt.md5(pwd);
-            if (StringUtils.isNotBlank(user.getPwd()) && pwd.equalsIgnoreCase(user.getPwd())) {
-                log.info("loginBusinessHall | Pwd is same. pwd 1 = {}, pwd 2 = {}", pwd, user.getPwd());
+            if (pwd.equalsIgnoreCase(user.getPassword())) {
+                log.info("Pwd is same. pwd 1 = {}, pwd 2 = {}", pwd, user.getPassword());
                 dealPwdSuccess(user);
             } else {
-                log.info("loginBusinessHall | Pwd is error. pwd 1 = {}, pwd 2 = {}", pwd, user.getPwd());
+                log.info("Pwd is error. pwd 1 = {}, pwd 2 = {}", pwd, user.getPassword());
                 dealPwdError(user);
             }
-            CheckPWDUtil.EvalPWD(decrypt_pwd, username);
             return user;
         } else {
-            throw RobotException.serviceException(ServiceExceptionEnum.LOGIN_PWD_ERROR);
+            throw RobotException.serviceException(ServiceExceptionEnum.NO_USER);
         }
     }
 
     @Override
-    public User getLoginUser() throws ServiceException, Exception {
+    public DzUser getLoginUser() throws ServiceException, Exception {
         HttpSession session = commonService.getSession();
-        User user;
-        user = (User) session.getAttribute("User");
+        DzUser user;
+        user = (DzUser) session.getAttribute("User");
         if (user == null) {
             throw RobotException.serviceException(ServiceExceptionEnum.USER_NO_LOGIN);
         }
@@ -97,8 +103,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
-    public void dealUserLock(User user) {
-        String lockType = StringUtils.isNotBlank(user.getLock_type()) ? user.getLock_type() : "0";
+    public void dealUserLock(DzUser user) {
+        String lockType = StringUtils.isNotBlank(user.getLockType()) ? user.getLockType() : "0";
         switch (lockType) {
             case "1":
                 throw RobotException.serviceException(ServiceExceptionEnum.USER_IS_LOCK);
@@ -109,20 +115,31 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
-    public void dealPwdSuccess(User user) {
-        log.info("===========> 重置用戶登錄次數為0");
-        loginMapper.updateLoginattempsAndLock("0", "0", user.getUser_no());
+    public void dealPwdSuccess(DzUser user) {
+        updateLoginattempsAndLock("0", "0", user.getUserNo());
     }
 
 
-    public void dealPwdError(User user) {
+    public void dealPwdError(DzUser user) {
         String loginattemps = StringUtils.isNotBlank(user.getLoginattemps()) ? user.getLoginattemps() : "0";
         if (Integer.valueOf(loginattemps) + 1 <= 2) {// 更新错误次数
-            loginMapper.updateLoginattempsAndLock(String.valueOf(Integer.valueOf(loginattemps) + 1), "0", user.getUser_no());
+            updateLoginattempsAndLock(String.valueOf(Integer.valueOf(loginattemps) + 1), "0", user.getUserNo());
         } else {// 锁住用户
-            loginMapper.updateLoginattempsAndLock(String.valueOf(Integer.valueOf(loginattemps) + 1), "1", user.getUser_no());
+            updateLoginattempsAndLock(String.valueOf(Integer.valueOf(loginattemps) + 1), "1", user.getUserNo());
         }
         throw RobotException.serviceException(ServiceExceptionEnum.PWD_ERROR);
+    }
+
+    public void updateLoginattempsAndLock(String loginattemps, String lockType, String userNo){
+        Example example = new Example(DzUser.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("userNo", userNo);
+
+        DzUser dzUser=new DzUser();
+        dzUser.setLoginattemps(loginattemps);
+        dzUser.setLockType(lockType);
+
+        dzUserMapper.updateByExampleSelective(dzUser,example);
     }
 
 }

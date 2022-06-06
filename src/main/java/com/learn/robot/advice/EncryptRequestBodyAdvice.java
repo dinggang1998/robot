@@ -3,6 +3,7 @@ package com.learn.robot.advice;
 import com.alibaba.fastjson.JSONObject;
 import com.learn.robot.aspect.RsaSecurityParameter;
 import com.learn.robot.model.Response;
+import com.learn.robot.util.AESEUtils;
 import com.learn.robot.util.RSAUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -67,10 +68,13 @@ public class EncryptRequestBodyAdvice implements ResponseBodyAdvice {
         //未加密数据不进行加密操作
         if ("200".equals(response.getCode())) {
             log.info("=======>加密前:{}", response.getData());
-            PublicKey publicKey1 = RSAUtils.string2PublicKey(publicKey);
-            //用公钥加密
-            byte[] publicEncrypt = RSAUtils.publicEncrypt(JSONObject.toJSONString(response.getData()).getBytes(), publicKey1);
-            String byte2Base64 = RSAUtils.byte2Base64(publicEncrypt);
+//            第一种加密方法（Data must not be longer than 245 bytes，有限制）
+//            PublicKey publicKey1 = RSAUtils.string2PublicKey(publicKey);
+//            //用公钥加密
+//            byte[] publicEncrypt = RSAUtils.publicEncrypt(JSONObject.toJSONString(response.getData()).getBytes(), publicKey1);
+//            String byte2Base64 = RSAUtils.byte2Base64(publicEncrypt);
+//            第二种加密方法
+            String byte2Base64 = AESEUtils.encrypt( JSONObject.toJSONString(response.getData()));
             log.info("=======>加密后:{}", byte2Base64);
             response.setData(byte2Base64);
             return (Object) response;

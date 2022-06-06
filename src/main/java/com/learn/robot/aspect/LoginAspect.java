@@ -1,8 +1,8 @@
 package com.learn.robot.aspect;
 
 import com.learn.robot.exception.RobotException;
-import com.learn.robot.domain.User;
 import com.learn.robot.enums.ServiceExceptionEnum;
+import com.learn.robot.model.user.DzUser;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -32,7 +32,7 @@ public class LoginAspect {
         // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        User user = (User) request.getSession().getAttribute("User");
+        DzUser user = (DzUser) request.getSession().getAttribute("User");
         if (user == null) {
             throw RobotException.serviceException(ServiceExceptionEnum.USER_NO_LOGIN);
         }

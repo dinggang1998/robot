@@ -85,11 +85,27 @@
             <artifactId>mapper</artifactId>
             <version>4.0.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mybatis.generator</groupId>-->
+<!--            <artifactId>mybatis-generator-core</artifactId>-->
+<!--            <version>1.3.5</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+        <!--MyBatis 生成实体类-->
         <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.5</version>
-            <scope>test</scope>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-core</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
         </dependency>
         <!--mysql依赖-->
         <dependency>
@@ -130,10 +146,17 @@
             <artifactId>swagger-core</artifactId>
             <version>1.5.20</version>
         </dependency>
+        <!-- swagger加密-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>1.9.3</version>
+        </dependency>
+        <!-- swagger docs文档 http://localhost:8080/docs.html-->
+        <dependency>
+            <groupId>com.github.caspar-chen</groupId>
+            <artifactId>swagger-ui-layer</artifactId>
+            <version>1.1.3</version>
         </dependency>
         <!-- 包装返回数据 -->
         <dependency>
