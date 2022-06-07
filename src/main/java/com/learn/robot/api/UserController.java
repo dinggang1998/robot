@@ -24,6 +24,7 @@ public class UserController {
     UserService userService;
 
     @ApiOperation("获取所有用户信息")
+    @ApiLog(description = "获取所有用户信息")
     @RequestMapping(value = "/getUserList", method = RequestMethod.POST)
     public List<DzUser> getUserList() {
         return userService.getUserList();
