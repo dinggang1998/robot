@@ -1,7 +1,8 @@
 spring:
   application:
     name: robot
-
+  profiles:
+    active: default
 
 #暴露所有web端点
 management:
@@ -9,3 +10,6 @@ management:
     web:
       exposure:
         include: '*'
+
+
+

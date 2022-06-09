@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="global/global-head::header" />
-<body class="gray-bg">
-    <div class="middle-box text-center animated fadeInDown">
-        <h1>500</h1>
-        <h3 class="font-bold">Internal Server Error</h3>
-        <div class="error-desc">
-            The server encountered something unexpected that didn't allow it to complete the request. We apologize.<br/>
-            You can go back to main page: <br/><a href="../index.html" class="btn btn-primary m-t">Dashboard</a>
+<head th:include="head::header-main" />
+
+
+<body class="nav-md">
+<div class="container body">
+  <div class="main_container">
+    <!-- page content -->
+    <div class="col-md-12">
+      <div class="col-middle">
+        <div class="text-center">
+          <h1 class="error-number">500</h1>
+          <h2>Internal Server Error</h2>
+          <p>We track these errors automatically, but if the problem persists feel free to contact us.
+            In the meantime, try refreshing.
+          </p>
         </div>
+      </div>
     </div>
+    <!-- /page content -->
+  </div>
+</div>
 </body>
 </html>

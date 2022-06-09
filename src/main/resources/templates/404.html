@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="global/global-head::header" />
-<body class="gray-bg">
-    <div class="middle-box text-center animated fadeInDown">
-        <h1>404</h1>
-        <h3 class="font-bold">Page Not Found</h3>
-        <div class="error-desc">
-            Sorry, but the page you are looking for has note been found. Try checking the URL for error, then hit the refresh button on your browser or try found something else in our app.
-            <form class="form-inline m-t" role="form">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search for page">
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
+<head th:include="head::header-main" />
+
+
+<body class="nav-md">
+<div class="container body">
+  <div class="main_container">
+    <!-- page content -->
+    <div class="col-md-12">
+      <div class="col-middle">
+        <div class="text-center text-center">
+          <h1 class="error-number">404</h1>
+          <h2>Sorry but we couldn't find this page</h2>
+          <p>This page you are looking for does not exist
+          </p>
         </div>
+      </div>
     </div>
+    <!-- /page content -->
+  </div>
+</div>
 </body>
 </html>

@@ -19,4 +19,3 @@ ${AnsiColor.BRIGHT_YELLOW}${AnsiStyle.BOLD}
 
 :: Spring Boot ::             (v${spring-boot.version})
 :: Spring Boot Tutorial ::    (v1.0.0)
-

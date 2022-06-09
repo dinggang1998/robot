@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="global/global-head::header" />
-<body class="gray-bg">
-    <div class="middle-box text-center animated fadeInDown">
-        <h1>403</h1>
-        <h3 class="font-bold">Forbidden</h3>
+<head th:include="head::header-main" />
 
-        <div class="error-desc">
-            You have no access to visit this resource. We apologize.<br/>
-            You can go back to main page: <br/><a href="../index.html" class="btn btn-primary m-t">Dashboard</a>
+
+<body class="nav-md">
+<div class="container body">
+  <div class="main_container">
+    <!-- page content -->
+    <div class="col-md-12">
+      <div class="col-middle">
+        <div class="text-center text-center">
+          <h1 class="error-number">403</h1>
+          <h2>Access denied</h2>
+          <p>Full authentication is required to access this resource.
+          </p>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 </body>
 </html>

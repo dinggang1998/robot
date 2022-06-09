@@ -12,7 +12,7 @@ spring:
         username: nacos
         password: nacos
         server-addr: 127.0.0.1:8848
-        namespace: 1c46759d-965c-462a-b86a-f324ff51fa0c
+        namespace: public
   #数据库mysql8配置
   datasource:
     url: jdbc:mysql://rm-bp1n4l8b76qf5z4e2zo.mysql.rds.aliyuncs.com:3306/stevending?serverTimezone=UTC&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
@@ -58,7 +58,6 @@ spring:
 
 #mybatis配置
 mybatis:
-  #mapper.xml位置
   mapper-locations: classpath:mapper/*.xml
 
 
@@ -76,15 +75,13 @@ swagger:
   production: false
   basic:
     enable: true
-    username: 123456
-    password: 123456
-
-
+    username: admin
+    password: admin
 
 resource-server:
   enable: true
   load-resource-authority: false
-  white-list: /api/v1/**,/swagger-resources/**
+  white-list: /api/v1/**,/swagger-resources/**,/403
   exception-code: 2003,100
 
 

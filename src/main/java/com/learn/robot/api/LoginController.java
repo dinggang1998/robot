@@ -26,12 +26,12 @@ public class LoginController {
     LoginService loginService;
 
     @ApiLog(description = "登录")
-    @RsaSecurityParameter
+//    @RsaSecurityParameter
     @RequestMapping(value = "/loginWeb", method = RequestMethod.POST)
-    public Response<DzUser> loginWeb(HttpServletRequest request, @RequestBody String jsonStr) throws ServiceException, Exception {
-        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
-        String username = jsonObject.get("username") == null ? "" : jsonObject.get("username").toString();
-        String pwd = jsonObject.get("pwd") == null ? "" : jsonObject.get("pwd").toString();
+    public Response<DzUser> loginWeb(HttpServletRequest request, @RequestBody String jsonStr,String username,String pwd) throws ServiceException, Exception {
+//        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+//        String username = jsonObject.get("username") == null ? "" : jsonObject.get("username").toString();
+//        String pwd = jsonObject.get("pwd") == null ? "" : jsonObject.get("pwd").toString();
         log.info("loginBusinessHall | Entry the method. username = {}, pwd = {}", username, pwd);
 
         DzUser user = loginService.loginWeb(username, pwd);
