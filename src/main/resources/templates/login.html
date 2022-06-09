@@ -19,8 +19,8 @@
                         <input type="text" class="form-control" name="password" id="password" placeholder="密码"
                                minlength="4" required onfocus="this.type='password'">
                     </div>
-                    <div>
-                        <a class="btn btn-default submit" id="submit" href="#">登入</a>
+                    <div style="margin-top: -20px">
+                        <a class="btn btn-default submit" id="submit" href="javascript:void(0);" style="margin-left:-80px;">登入</a>
                         <a class="reset_pass" href="#">忘记密码?</a>
                     </div>
 
@@ -80,41 +80,5 @@
     </div>
 </div>
 </body>
-<script>
-
-    $("#submit").click(function () {
-        if (!$("#username").val()) {
-            swal.fire('请输入用户名!')
-            return;
-        }
-        if (!$("#password").val()) {
-            swal.fire('请输入密码!')
-            return;
-        }
-
-        $.ajax({
-            type: "POST",
-            url: getRealPath() + "/api/v1/login/loginWeb",
-            data: {username: $("#username").val(), pwd: $("#password").val()},
-            dataType: "json",
-            success: function (data) {
-                if (data.code == "200") {
-                    window.location.href = getRealPath() + '/index';
-                } else {
-                    swal.fire(
-                        '登录失败!',
-                        data.message,
-                        'error'
-                    )
-                }
-            },
-            fail: function () {
-                window.location.href = getRealPath() + "/500";
-
-            }
-        });
-    })
-
-</script>
-
+<script th:src="@{/js/login/main.js}"></script>
 </html>
