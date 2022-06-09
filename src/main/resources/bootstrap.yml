@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: robot
+
+
+#暴露所有web端点
+management:
+  endpoint:
+    web:
+      exposure:
+        include: '*'
