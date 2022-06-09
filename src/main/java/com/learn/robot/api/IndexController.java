@@ -20,6 +20,7 @@ public class IndexController {
         if(user==null){
             return "login";
         }
+        model.addAttribute("user",user);
         return "index";
     }
 
