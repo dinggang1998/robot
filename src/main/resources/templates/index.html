@@ -1,30 +1,73 @@
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title></title>
-</head>
-<body>
-<button id="btn">发送验证码</button>
-<script type="text/javascript">
-	var oBtn = document.getElementById("btn")
-	// 初始化时间
-	var time = 10
-	oBtn.onclick = function(){
-		this.disabled = true
-		sendCode()
-	}
-	function sendCode(){
-		time--
-		console.log(time)
-		oBtn.innerHTML = time+"s后重发"
-		if(time>1){
-			setTimeout(sendCode,1000)
-		}else{
-			oBtn.innerHTML = "发送验证码"
-			oBtn.disabled = false
-			time = 10
-		}
-	}
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="global/head::header-main"/>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:include="global/menu::index"></div>
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <h1>别看了，这傻逼网站还什么功能都没有(除了登录功能是真的)</h1>
+
+            <!-- top tiles -->
+
+            <!-- /top tiles -->
+
+
+            <!-- /page content -->
+
+            <!-- footer content -->
+
+            <!-- /footer content -->
+        </div>
+    </div>
+</div>
+<!-- Custom Theme Scripts -->
+<script th:src="@{/js/build/custom.min.js}"></script>
+<script>function test() {
+    swal.fire({
+        title: '都跟你讲了开发中，点个锤子',
+        width: 600,
+        padding: '3em',
+        color: '#716add',
+        background: '#fff url(/images/trees.png)',
+        backdrop: `
+    rgba(0,0,123,0.4)
+    url("/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `
+    })
+}
+
+function test1(){
+
+  let timerInterval
+  swal.fire({
+    title: '炸死你个鳖孙',
+    html: '炸弹倒计时 <b></b> 秒.',
+    timer: 5000,
+    timerProgressBar: true,
+    didOpen: () => {
+      Swal.showLoading()
+      const b = Swal.getHtmlContainer().querySelector('b')
+      timerInterval = setInterval(() => {
+        b.textContent = Swal.getTimerLeft()
+      }, 100)
+    },
+    willClose: () => {
+      clearInterval(timerInterval)
+    }
+  }).then((result) => {
+    /* Read more about handling dismissals below */
+    if (result.dismiss === Swal.DismissReason.timer) {
+      console.log('I was closed by the timer')
+    }
+  })
+}
 </script>
 </body>
 </html>

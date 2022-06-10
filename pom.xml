@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
+        <version>2.2.5.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -63,12 +63,6 @@
             <artifactId>acm-sdk</artifactId>
             <version>1.0.9</version>
         </dependency>
-        <!--钉钉小程序依赖-->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>dingtalk</artifactId>
-            <version>1.3.53</version>
-        </dependency>
         <!--邮件发送依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -85,13 +79,23 @@
             <artifactId>mapper</artifactId>
             <version>4.0.0</version>
         </dependency>
+        <!--MyBatis 生成实体类-->
         <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.5</version>
-            <scope>test</scope>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-core</artifactId>
+            <version>3.4.0</version>
         </dependency>
-        <!--mysql依赖-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <!-- mysql依赖-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -110,16 +114,39 @@
             <scope>test</scope>
         </dependency>
         <!-- 权限校验框架 -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
-        <!-- 包装返回数据 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
+        <!--        </dependency>-->
+        <!-- swagger 版本兼容问题详见readme -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>3.0.0</version>
+        </dependency>
         <dependency>
             <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
+            <artifactId>swagger-core</artifactId>
             <version>1.5.20</version>
         </dependency>
+        <!-- swagger加密-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+        <!-- swagger docs文档-->
+        <dependency>
+            <groupId>com.github.caspar-chen</groupId>
+            <artifactId>swagger-ui-layer</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <!-- 包装返回数据 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
@@ -157,25 +184,69 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-<!--        &lt;!&ndash; 数据库驱动 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.oracle</groupId>-->
-<!--            <artifactId>ojdbc6</artifactId>-->
-<!--            <version>11.2.0.3</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; Druid 依赖 log4j包 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>log4j</groupId>-->
-<!--            <artifactId>log4j</artifactId>-->
-<!--            <version>1.2.17</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; springcloud依赖，开启bootstrap.yml &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-context</artifactId>-->
-<!--            <version>2.2.0.RELEASE</version>-->
-<!--        </dependency>-->
+        <!-- 二维码生成依赖-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <!-- 验证码生成依赖-->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+        <!-- nacos依赖 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>2.2.1.RELEASE</version>
+        </dependency>
+        <!--        &lt;!&ndash; 数据库驱动 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.oracle</groupId>-->
+        <!--            <artifactId>ojdbc6</artifactId>-->
+        <!--            <version>11.2.0.3</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; Druid 依赖 log4j包 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>log4j</groupId>-->
+        <!--            <artifactId>log4j</artifactId>-->
+        <!--            <version>1.2.17</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; springcloud依赖，开启bootstrap.yml &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-context</artifactId>-->
+        <!--            <version>2.2.0.RELEASE</version>-->
+        <!--        </dependency>-->
     </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- nacos父依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Hoxton.SR3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>2.1.2.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -205,7 +276,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            </plugins>
+        </plugins>
     </build>
 
 

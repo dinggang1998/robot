@@ -1,26 +1,18 @@
-server:
-  port: 8080
-
 logging:
   level:
     root: INFO
 
-#mybatis配置
-mybatis:
-  #mapper.xml位置
-  mapper-locations: classpath:mapper/*.xml
+server:
+  port: 8080
 
 spring:
-  #模版缓存关闭
-  thymeleaf:
-    cache: false
-
-  #公钥私钥
-  encrypt:
-    privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1+VUEr6xSu8yJFM/vmcGEkpqX7zCWWAXDVjODEJtkI/grqY0PUhaKh06I0aNYAwPwYgnekAbmNLorBlm7DBvD0cQJh+fJSPyjH+sPofSagWn5dmECcXNxxiQxiZIvZkLa7puWGSzgcn7u8EJglH10lg1bkmHwvaXW+Tdne1B7fGGxnJ7yGBzzLQTjHuI05OOHJ0t7vgIlkejaOenu9EFxXTEfwGl3iEA8xOBe+5qNxh8hMu5Z9xYjYJrzjQ5ppN5Kl3+/698vl/u73DvL8coSN64KiM/RGafDQZls2veijEWXO5Q0w9KSY+osnz+krqe3T9Sm2KL3MvGz+nMxJiCFAgMBAAECggEBAJ+w9lLudyMDezKw+Oki3RgiL1g1p0XIaQZKl1nlMPhoOFjYqdlQCEf5BYo7rkSGIObKoi6V5fgPPXCUWhozPgpSAt76TQXu7wWX9Qf68FTGTOGGaQtj1BN79jciqw69ht3pls/Zt/AfihTU8useZBnztDUv+JLzWp2UhnJhXPd/bMoEcoEcb+na+gkyLSizTPjWKb3PtX32/im2+1ClRc/JWDLPC9eapYhH7qIy2qgDJf3diQ2y1dT0D/lZfPt2Qimofa3YG376RwY75UdLHeTg+xY6f49pGhp54aEx9acn4AJ/2eqpIzB56iBZ91DKNAYB8W2cgQm6BC8Zr49klwECgYEA2Chf7NjosryxvSQcP6nn+FYbQaQCPYjEMZa5gB8BP9md+UjQ5EadVieXiOSD0un1mF8q9CsKUYcEzoLn0YDtZXPb1ZTY4SbVVxF6iZHyJ23MRjzo+9kBs7ZbQpRsI88mC2sUw3EOVvzDFba4Kfgoqm67+d+8BqITdmOJesRksv0CgYEA14P2GLy1+vmTXvH8KUc4XLKeIneUgtntCMWP2H1d/EOs80WdX8Vh3UkksX2qibyuGbc5w8rhEn2eZyQmFQoaukEx7agTMzQ24g4KeMYD4qtC/QMxRNgc5XhRONkhD3et17NKwwsg/7C0Z2CN2Pt2wzPlsFUrSbmsAgWQIpUMLikCgYAyQ/FKmoZCSi7q1OLcyx3uWdesw/7hYFR/U5V/fbZEqs5Zkd1BuEoOJtbONpWRDmbWMAtFDF0x6Dvt6fMOfPS3iuGsIRjuAqHJxX7BTvcIxDekfbWQGz6SE+3U5b7f9OPb8+K4MCotgEm9WugomlSajXWY/bYztKzh8vOdYN4p4QKBgFUP/bNX0JAFr9gatMdqF+HmkinSfuiCsV7z80mkedMWtw2x3WKummjn9LalfgktUp5Nxlv0GI/eywW0q99EBLadAuLlouZj5oGkvxdaOLBfnmoUt36PuiAMNCq28KiVOSVY29pN6zFggmQHJRWOcxqqwi6t/w7zXOPTZEdyAsO5AoGBAJKnLWJ9mruvv9yXUFVfRwIFX77EnG5Hh7xWtzSi9zjaUvzqrdjMMkCEDtnwXJnLkPofQKB5r7EirAYlrcPdoiMPbefqvrD5/zTVhVzewpHlx//KqY2jOoKqM4WObDjukA1c3ll+gIqCIvmX+8alwaKSKQIqAW/utb1B6JDl/jbG
-    publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtflVBK+sUrvMiRTP75nBhJKal+8wllgFw1YzgxCbZCP4K6mND1IWiodOiNGjWAMD8GIJ3pAG5jS6KwZZuwwbw9HECYfnyUj8ox/rD6H0moFp+XZhAnFzccYkMYmSL2ZC2u6blhks4HJ+7vBCYJR9dJYNW5Jh8L2l1vk3Z3tQe3xhsZye8hgc8y0E4x7iNOTjhydLe74CJZHo2jnp7vRBcV0xH8Bpd4hAPMTgXvuajcYfITLuWfcWI2Ca840OaaTeSpd/v+vfL5f7u9w7y/HKEjeuCojP0Rmnw0GZbNr3ooxFlzuUNMPSkmPqLJ8/pK6nt0/Uptii9zLxs/pzMSYghQIDAQAB
-
-
+  cloud:
+    nacos:
+      discovery:
+        username: nacos
+        password: nacos
+        server-addr: 127.0.0.1:8848
+        namespace: public
   #数据库mysql8配置
   datasource:
     url: jdbc:mysql://rm-bp1n4l8b76qf5z4e2zo.mysql.rds.aliyuncs.com:3306/stevending?serverTimezone=UTC&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
@@ -48,21 +40,51 @@ spring:
       mail:
         smtp:
           socketFactoryClass: javax.net.ssl.SSLSocketFactory # 配饰 SSL 加密工厂
-#        debug: true
-#    备份邮箱
-#    host: mail.asiainfo.com # 配置 smtp 服务器地址
-#    port: 587 # smtp 服务器的端口
-#    username: dinggang@asiainfo.com # 配置邮箱用户名(你的邮箱地址)
-#    password: slyWOAINI1314 # 配置申请到的授权码(刚让复制的授权码)
+    #        debug: true
+    #    备份邮箱
+    #    host: mail.asiainfo.com # 配置 smtp 服务器地址
+    #    port: 587 # smtp 服务器的端口
+    #    username: dinggang@asiainfo.com # 配置邮箱用户名(你的邮箱地址)
+    #    password: slyWOAINI1314 # 配置申请到的授权码(刚让复制的授权码)
+
+  #模版缓存关闭
+  thymeleaf:
+    cache: false
+
+  #公钥私钥
+  encrypt:
+    privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1+VUEr6xSu8yJFM/vmcGEkpqX7zCWWAXDVjODEJtkI/grqY0PUhaKh06I0aNYAwPwYgnekAbmNLorBlm7DBvD0cQJh+fJSPyjH+sPofSagWn5dmECcXNxxiQxiZIvZkLa7puWGSzgcn7u8EJglH10lg1bkmHwvaXW+Tdne1B7fGGxnJ7yGBzzLQTjHuI05OOHJ0t7vgIlkejaOenu9EFxXTEfwGl3iEA8xOBe+5qNxh8hMu5Z9xYjYJrzjQ5ppN5Kl3+/698vl/u73DvL8coSN64KiM/RGafDQZls2veijEWXO5Q0w9KSY+osnz+krqe3T9Sm2KL3MvGz+nMxJiCFAgMBAAECggEBAJ+w9lLudyMDezKw+Oki3RgiL1g1p0XIaQZKl1nlMPhoOFjYqdlQCEf5BYo7rkSGIObKoi6V5fgPPXCUWhozPgpSAt76TQXu7wWX9Qf68FTGTOGGaQtj1BN79jciqw69ht3pls/Zt/AfihTU8useZBnztDUv+JLzWp2UhnJhXPd/bMoEcoEcb+na+gkyLSizTPjWKb3PtX32/im2+1ClRc/JWDLPC9eapYhH7qIy2qgDJf3diQ2y1dT0D/lZfPt2Qimofa3YG376RwY75UdLHeTg+xY6f49pGhp54aEx9acn4AJ/2eqpIzB56iBZ91DKNAYB8W2cgQm6BC8Zr49klwECgYEA2Chf7NjosryxvSQcP6nn+FYbQaQCPYjEMZa5gB8BP9md+UjQ5EadVieXiOSD0un1mF8q9CsKUYcEzoLn0YDtZXPb1ZTY4SbVVxF6iZHyJ23MRjzo+9kBs7ZbQpRsI88mC2sUw3EOVvzDFba4Kfgoqm67+d+8BqITdmOJesRksv0CgYEA14P2GLy1+vmTXvH8KUc4XLKeIneUgtntCMWP2H1d/EOs80WdX8Vh3UkksX2qibyuGbc5w8rhEn2eZyQmFQoaukEx7agTMzQ24g4KeMYD4qtC/QMxRNgc5XhRONkhD3et17NKwwsg/7C0Z2CN2Pt2wzPlsFUrSbmsAgWQIpUMLikCgYAyQ/FKmoZCSi7q1OLcyx3uWdesw/7hYFR/U5V/fbZEqs5Zkd1BuEoOJtbONpWRDmbWMAtFDF0x6Dvt6fMOfPS3iuGsIRjuAqHJxX7BTvcIxDekfbWQGz6SE+3U5b7f9OPb8+K4MCotgEm9WugomlSajXWY/bYztKzh8vOdYN4p4QKBgFUP/bNX0JAFr9gatMdqF+HmkinSfuiCsV7z80mkedMWtw2x3WKummjn9LalfgktUp5Nxlv0GI/eywW0q99EBLadAuLlouZj5oGkvxdaOLBfnmoUt36PuiAMNCq28KiVOSVY29pN6zFggmQHJRWOcxqqwi6t/w7zXOPTZEdyAsO5AoGBAJKnLWJ9mruvv9yXUFVfRwIFX77EnG5Hh7xWtzSi9zjaUvzqrdjMMkCEDtnwXJnLkPofQKB5r7EirAYlrcPdoiMPbefqvrD5/zTVhVzewpHlx//KqY2jOoKqM4WObDjukA1c3ll+gIqCIvmX+8alwaKSKQIqAW/utb1B6JDl/jbG
+    publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtflVBK+sUrvMiRTP75nBhJKal+8wllgFw1YzgxCbZCP4K6mND1IWiodOiNGjWAMD8GIJ3pAG5jS6KwZZuwwbw9HECYfnyUj8ox/rD6H0moFp+XZhAnFzccYkMYmSL2ZC2u6blhks4HJ+7vBCYJR9dJYNW5Jh8L2l1vk3Z3tQe3xhsZye8hgc8y0E4x7iNOTjhydLe74CJZHo2jnp7vRBcV0xH8Bpd4hAPMTgXvuajcYfITLuWfcWI2Ca840OaaTeSpd/v+vfL5f7u9w7y/HKEjeuCojP0Rmnw0GZbNr3ooxFlzuUNMPSkmPqLJ8/pK6nt0/Uptii9zLxs/pzMSYghQIDAQAB
+
+#mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
 
 
+#swagger参数
 swagger:
-  base-package: com.xwtec.ec
-  title: API Document
-  description: API Document
-  terms-of-service-url: http://www.xwsoft.com.cn/
-  contact: 025-84669966
+  base-package: com.learn.robot.api
+  title: 小叮当的项目接口文档
+  description: 官网建设中
+  terms-of-service-url: https://github.com/dinggang1998/robot/
+  name: Steven Ding
+  email: 1244910580@qq.com
+  url: https://github.com/dinggang1998
   version: 1.0
+  #swagger密码
+  production: false
+  basic:
+    enable: true
+    username: admin
+    password: admin
+
+resource-server:
+  enable: true
+  load-resource-authority: false
+  white-list: /api/v1/**,/swagger-resources/**,/403
+  exception-code: 2003,100
+
+
 
 
 

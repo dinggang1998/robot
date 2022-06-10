@@ -6,6 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
@@ -13,8 +14,6 @@ import java.io.File;
 /**
  * @ClassName EmailUtil
  * @Description 邮件发送工具
- * @Author Sophia
- * @Date 2022/4/6 16:06
  */
 @Component
 public class EmailUtil {
@@ -45,15 +44,16 @@ public class EmailUtil {
 
     /**
      * 发送带附件的邮件信息
+     *
      * @param to      接收方
      * @param subject 邮件主题
      * @param content 邮件内容（发送内容）
-     * @param files 文件数组 // 可发送多个附件
+     * @param files   文件数组 // 可发送多个附件
      */
     public void sendMessageCarryFiles(String to, String subject, String content, File[] files) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setFrom(from); // 设置发送发
             helper.setTo(to); // 设置接收方
             helper.setSubject(subject); // 设置邮件主题
@@ -69,18 +69,19 @@ public class EmailUtil {
         // 发送邮件
         mailSender.send(mimeMessage);
     }
+
     /**
      * 发送带附件的邮件信息
      *
      * @param to      接收方
      * @param subject 邮件主题
      * @param content 邮件内容（发送内容）
-     * @param file 单个文件
+     * @param file    单个文件
      */
     public void sendMessageCarryFile(String to, String subject, String content, File file) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage,true);
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setFrom(from); // 设置发送发
             helper.setTo(to); // 设置接收方
             helper.setSubject(subject); // 设置邮件主题

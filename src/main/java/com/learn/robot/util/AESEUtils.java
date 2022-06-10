@@ -1,37 +1,39 @@
 package com.learn.robot.util;
 
 import org.apache.commons.net.util.Base64;
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-/*
+/**
  * AES对称加密和解密
+ * 使用AES-128-CBC加密模式，key需要为16位,key和iv可以相同，也可以不同
  */
 public class AESEUtils {
 
-    //使用AES-128-CBC加密模式，key需要为16位,key和iv可以相同，也可以不同!
-    private static String KEY="@hcetwx#!lecxetc";
+    /**
+     * 因为静态变量不能直接从配置文件通过@value获取，所以采用此方法
+     */
+    private static String KEY = "slyWOAINI314!@#$";
 
-    private static String IV="@hcetwx#!lecxetc";
+    private static String IV = "slyWOAINI314!@#$";
 
     private static final String CIPHER_ALGORITHM_CBC = "AES/CBC/NoPadding";
 
-    /**
-     * 因为静态变量不能直接从配置文件通过@value获取，所以采用此方法
-     * @param key
-     */
+
 
     /**
      * 加密方法 返回base64加密字符串
      * 和前端保持一致
-     * @param data  要加密的数据
-     * @param key 加密key
-     * @param iv 加密iv
+     *
+     * @param data 要加密的数据
+     * @param key  加密key
+     * @param iv   加密iv
      * @return 加密的结果
-     * @throws Exception
      */
-    public static String encrypt(String data, String key, String iv)  {
+    public static String encrypt(String data, String key, String iv) {
         try {
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);//"算法/模式/补码方式"NoPadding PKCS5Padding
             int blockSize = cipher.getBlockSize();
@@ -59,9 +61,10 @@ public class AESEUtils {
 
     /**
      * 解密方法
+     *
      * @param data 要解密的数据
      * @param key  解密key
-     * @param iv 解密iv
+     * @param iv   解密iv
      * @return 解密的结果
      * @throws Exception
      */
@@ -82,6 +85,7 @@ public class AESEUtils {
 
     /**
      * 使用默认的key和iv加密
+     *
      * @param data
      * @return
      * @throws Exception
@@ -92,6 +96,7 @@ public class AESEUtils {
 
     /**
      * 使用默认的key和iv解密
+     *
      * @param data
      * @return
      * @throws Exception
@@ -99,20 +104,5 @@ public class AESEUtils {
     public static String decrypt(String data) {
         return decrypt(data, KEY, IV);
     }
-
-//    public static String decryMsisdn(String msisdn) {
-//        try{
-//            if(StringUtils.isNotBlank(msisdn)){
-//                msisdn = AESEUtils.decrypt(msisdn);
-//            }
-//        }catch (Exception e){
-//            msisdn = "";
-//            e.printStackTrace();
-//            System.out.println("号码解密失败");
-//        }
-//        return msisdn;
-//    }
-
-
 
 }

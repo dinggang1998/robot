@@ -2,6 +2,8 @@ package com.learn.robot.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -25,10 +27,12 @@ public class ApiLogAspect {
 
 
     @Pointcut("@annotation(com.learn.robot.aspect.ApiLog)")
-    public void apiLog() {}
+    public void apiLog() {
+    }
 
     /**
      * 在切点之前织入
+     *
      * @param joinPoint
      * @throws Throwable
      */
@@ -39,7 +43,9 @@ public class ApiLogAspect {
         HttpServletRequest request = attributes.getRequest();
         // 获取 @WebLog 注解的描述信息
         String methodDescription = getAspectLogDescription(joinPoint);
-        log.info("Request Args   : {}", JSONObject.toJSON(joinPoint.getArgs()));
+//        if(ObjectUtils.isNotEmpty(joinPoint.getArgs())){
+//            log.info("Request Args   : {}", JSONObject.toJSON(joinPoint.getArgs()));
+//        }
         log.info("URL            : {}", request.getRequestURL().toString());
         log.info("Description    : {}", methodDescription);
         log.info("HTTP Method    : {}", request.getMethod());
@@ -50,6 +56,7 @@ public class ApiLogAspect {
 
     /**
      * 环绕
+     *
      * @param proceedingJoinPoint
      * @return
      * @throws Throwable
@@ -66,6 +73,7 @@ public class ApiLogAspect {
 
     /**
      * 获取切面注解的描述
+     *
      * @param joinPoint 切点
      * @return 描述信息
      * @throws Exception
