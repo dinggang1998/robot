@@ -10,17 +10,30 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form id="loginForm">
+                <form id="loginForm" class="form-horizontal">
                     <h1>登录</h1>
                     <div>
-                        <input type="text" id="username" class="form-control" placeholder="用户名" required=""/>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="用户名"
+                               required/>
                     </div>
                     <div>
                         <input type="text" class="form-control" name="password" id="password" placeholder="密码"
-                               minlength="4" required onfocus="this.type='password'">
+                               minlength="4" onfocus="this.type='password'" required>
                     </div>
+                    <div>
+                        <img  class="imgVerify" id="imgVerify" name="imgVerify" src="" onclick="getVerify();" title="重新获取"/>
+                        <input type="text" placeholder="验证码" class="form-control" id="imagecode1" name="imagecode"
+                               minlength="4" required/>
+                        <p style="width: 30px"></p>
+
+                        <input type="text" id="sessionId" name="sessionId" style="display: none"/>
+
+                    </div>
+
                     <div style="margin-top: -20px">
-                        <a class="btn btn-default submit" id="submit" href="javascript:void(0);" style="margin-left:-80px;">登入</a>
+                        <input class="btn btn-default submit" type="submit"
+                               style="margin-left:50px;color: #5A738E;font-size: 13px;margin-top: 6px;background: none;border: none"
+                               value="登入">
                         <a class="reset_pass" href="#">忘记密码?</a>
                     </div>
 
@@ -44,17 +57,20 @@
 
         <div id="register" class="animate form registration_form">
             <section class="login_content">
-                <form>
+                <form id="fom2">
                     <h1>创建用户</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="用户名" required=""/>
+                        <input type="text" id="username1" name="username1" class="form-control" placeholder="用户名"
+                               required=""/>
                     </div>
                     <div>
-                        <input type="email" class="form-control" placeholder="邮箱" required=""/>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="邮箱" required=""/>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="密码" required=""/>
+                        <input type="text" class="form-control" name="password1" id="password1" placeholder="密码"
+                               minlength="4" required onfocus="this.type='password'">
                     </div>
+
                     <div>
                         <a class="btn btn-default submit" href="index">提交</a>
                     </div>
@@ -80,5 +96,6 @@
     </div>
 </div>
 </body>
-<script th:src="@{/js/login/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/login/main.js}"></script>
+<link th:href="@{/css/login/login.css}" rel="stylesheet">
 </html>

@@ -1223,16 +1223,16 @@
 }
 
 .profile_info span {
-    font-size: 13px;
+    font-size: 18px;
     line-height: 30px;
-    color: #BAB8B8
+    color: beige;
 }
 
 .profile_info h2 {
-    font-size: 14px;
+    font-size: 17px;
     color: #ECF0F1;
     margin: 0;
-    font-weight: 300
+    font-weight: 400
 }
 
 .profile.img_2 {
@@ -1459,8 +1459,8 @@ body .container.body .right_col {
 }
 
 .bg-red {
-    background: #E74C3C !important;
-    border: 1px solid #E74C3C !important;
+    background: #1ab394 !important;
+    border: 1px solid #1ab394 !important;
     color: #fff
 }
 

@@ -18,7 +18,7 @@ public class IndexController {
     public String index(HttpServletRequest request,Model model) {
         DzUser user = (DzUser) request.getSession().getAttribute("User");
         if(user==null){
-            return "login";
+            return "403";
         }
         model.addAttribute("user",user);
         return "index";
@@ -50,4 +50,8 @@ public class IndexController {
         return "500";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "index1")
+    public String index1() {
+        return "index1";
+    }
 }

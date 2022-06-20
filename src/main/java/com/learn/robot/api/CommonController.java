@@ -37,7 +37,7 @@ public class CommonController {
      */
     @ApiLog(description = "获取静态验证码")
     @SuppressWarnings({"rawtypes"})
-    @RequestMapping(value = "/captcha/kaptcha", method = RequestMethod.POST)
+    @RequestMapping(value = "/captcha/kaptcha", method = RequestMethod.GET)
     public Response<Map<String, Object>> defaultKaptcha(HttpServletRequest request) throws ServiceException, Exception {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap = commonService.defaultKaptcha();
@@ -50,11 +50,11 @@ public class CommonController {
     @ApiLog(description = "静态验证码校验")
     @SuppressWarnings("rawtypes")
     @RequestMapping(value = "/codeVerify", method = RequestMethod.POST)
-    @RsaSecurityParameter
-    public Response<UuidToken> codeVerify(HttpServletRequest request, @RequestBody String jsonStr) throws Exception {
-        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
-        String imageCode = jsonObject.getString("imagecode");
-        String sessionId = jsonObject.getString("sessionId");
+//    @RsaSecurityParameter
+    public Response<UuidToken> codeVerify(HttpServletRequest request, @RequestBody String jsonStr,String imageCode,String sessionId) throws Exception {
+//        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+//        String imageCode = jsonObject.getString("imagecode");
+//        String sessionId = jsonObject.getString("sessionId");
         commonService.verifyImageCode(imageCode, sessionId);
         // 增加随机数对称加密防止抓包后的修改
         UuidToken uuidToken = new UuidToken();

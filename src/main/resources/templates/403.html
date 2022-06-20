@@ -12,13 +12,15 @@
         <div class="text-center text-center">
           <h1 class="error-number">403</h1>
           <h2>Access denied</h2>
-          <p>Full authentication is required to access this resource.
-          </p>
+
+          <div class="error-desc">
+            Full authentication is required to access this resource.<br/>
+            You can go back to main page: <br/><a href="../login" class="btn btn-secondary">Dashboard</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script th:src="@{/js/build/custom.min.js}"></script>
 </body>
 </html>

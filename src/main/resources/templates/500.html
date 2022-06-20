@@ -12,15 +12,17 @@
         <div class="text-center">
           <h1 class="error-number">500</h1>
           <h2>Internal Server Error</h2>
-          <p>We track these errors automatically, but if the problem persists feel free to contact us.
-            In the meantime, try refreshing.
-          </p>
+          <div class="error-desc">
+            We track these errors automatically, but if the problem persists feel free to contact us.
+            In the meantime, try refreshing.<br/>
+            You can go back to main page: <br/><a href="#" onclick="window.history.go(-1)" class="btn btn-secondary">Dashboard</a>
+          </div>
+
         </div>
       </div>
     </div>
     <!-- /page content -->
   </div>
 </div>
-<script th:src="@{/js/build/custom.min.js}"></script>
 </body>
 </html>
