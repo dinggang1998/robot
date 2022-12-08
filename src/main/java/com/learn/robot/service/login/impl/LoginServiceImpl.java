@@ -19,10 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Slf4j
@@ -138,7 +135,7 @@ public class LoginServiceImpl implements LoginService {
         DzUser dzUser=new DzUser();
         dzUser.setLoginattemps(loginattemps);
         dzUser.setLockType(lockType);
-
+        dzUser.setLoginTime(new Date());
         dzUserMapper.updateByExampleSelective(dzUser,example);
     }
 

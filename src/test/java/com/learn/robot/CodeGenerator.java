@@ -13,6 +13,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 链接数据库自动生成代码模版
+ * */
 public class CodeGenerator {
 
     private static String username="stevending";

@@ -29,7 +29,6 @@ public class LoginAspect {
      */
     @Before("login()")
     public void doBefore() throws Throwable {
-        // 开始打印请求日志
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         DzUser user = (DzUser) request.getSession().getAttribute("User");

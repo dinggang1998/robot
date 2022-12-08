@@ -8,6 +8,8 @@ import com.learn.robot.model.Response;
 import com.learn.robot.model.user.DzUser;
 import com.learn.robot.service.user.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,10 @@ public class UserController {
     @ApiLog(description = "根据id获取用户信息")
     @PostMapping("/getUserById")
     @RsaSecurityParameter(inDecode = false,outEncode = true)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户ID", required = false,
+                    dataType = "String", paramType = "query", defaultValue = "true"),
+    })
     public Response<DzUser> getUserById(@RequestBody String id) throws ServiceException {
         return Response.success(userService.getUserById(id));
     }

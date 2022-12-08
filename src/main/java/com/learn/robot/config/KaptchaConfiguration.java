@@ -16,7 +16,7 @@ public class KaptchaConfiguration {
         Properties properties = new Properties();
         properties.setProperty("kaptcha.border.color", "105,179,90");
         //文字颜色
-        properties.setProperty("kaptcha.textproducer.font.color", "blue");
+        properties.setProperty("kaptcha.textproducer.font.color", "yellow");
         //宽度
         properties.setProperty("kaptcha.image.width", "180");
         //高度

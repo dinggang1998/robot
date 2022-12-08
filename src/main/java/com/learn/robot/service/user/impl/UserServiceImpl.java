@@ -10,6 +10,7 @@ import com.learn.robot.service.user.UserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "11", key = "#id")
     public DzUser getUserById(String id) throws ServiceException {
         if (StringUtils.isBlank(id)) {
             throw RobotException.serviceException(ServiceExceptionEnum.LACK_PARAMS);
