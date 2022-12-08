@@ -15,7 +15,9 @@
           <div class="error-desc">
             We track these errors automatically, but if the problem persists feel free to contact us.
             In the meantime, try refreshing.<br/>
-            You can go back to main page: <br/><a href="#" onclick="window.history.go(-1)" class="btn btn-secondary">Dashboard</a>
+            You can go back to main page: <br/>
+            两秒后会自动跳转！ <br/>
+            <a href="#" onclick="window.history.go(-1)" class="btn btn-secondary">Dashboard</a>
           </div>
 
         </div>
@@ -24,5 +26,10 @@
     <!-- /page content -->
   </div>
 </div>
+<script>
+  setTimeout(function () {
+    window.location.href = getRealPath() + "/index";
+  }, 2000)
+</script>
 </body>
 </html>

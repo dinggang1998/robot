@@ -15,12 +15,19 @@
 
           <div class="error-desc">
             Full authentication is required to access this resource.<br/>
-            You can go back to main page: <br/><a href="../login" class="btn btn-secondary">Dashboard</a>
+            You can go back to main page: <br/>
+            两秒后会自动跳转！ <br/>
+            <a href="../login" class="btn btn-secondary">Dashboard</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+  setTimeout(function () {
+    window.location.href = getRealPath() + "/";
+  }, 2000)
+</script>
 </body>
 </html>

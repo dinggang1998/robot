@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 这是一个自动考试软件
  * **/
-public class examHelp {
+public class ExamHelp {
 
     public static void main(String[] args) throws Exception {
         postWithJson(

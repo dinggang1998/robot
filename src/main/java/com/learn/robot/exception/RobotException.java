@@ -16,4 +16,8 @@ public class RobotException {
         return new ServiceException(response.getCode(), response.getMessage(), response.getMessage());
     }
 
+    public static ServiceException serviceException(String code, String message, String message_en) {
+        return new ServiceException(code, message, message_en);
+    }
+
 }

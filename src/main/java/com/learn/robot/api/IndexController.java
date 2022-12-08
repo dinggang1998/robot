@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/")
 public class IndexController {
 
-    @RequestMapping(method = RequestMethod.GET, value = {"", "index"})
+    @RequestMapping(method = RequestMethod.GET, value = {"index"})
     public String index(HttpServletRequest request,Model model) {
         DzUser user = (DzUser) request.getSession().getAttribute("User");
         if(user==null){
@@ -24,7 +24,8 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = {"login"})
+
+    @RequestMapping(method = RequestMethod.GET, value = {"", "login"})
     public String login(Model model) {
         return "login";
     }
@@ -50,8 +51,4 @@ public class IndexController {
         return "500";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "index1")
-    public String index1() {
-        return "index1";
-    }
 }
