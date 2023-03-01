@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="global/head::header-main"/>
+
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div th:include="global/menu::index"></div>
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <h1 style="font-family: fantasy;">操作指南(如有任何问题与开发者无关，仅供参考)</h1>
+            <br style="margin-top: 30px">
+            <video th:src="@{/images/examhelp1.mp4}" controls autoplay></video>
+
+            <!--            <a style="font-size: x-large;margin-left: 3%;font-family: fantasy;">1.先登陆，随便在一个接口里复制出你的token,如下图</a>-->
+
+            <!--            <img th:src="@{/images/help1.jpg}" alt="..." style="width: 90%;"><br>-->
+
+            <!--            <a style="font-size: x-large;margin-left: 3%;font-family: fantasy;">2.点击开始考试，到新跳出的页面，复制整串链接，最后的这段就是paperid，然后关闭这个页面，</a>-->
+            <!--            <img th:src="@{/images/help1.jpg}" alt="..." style="width: 90%;"><br>-->
+
+            <!--            <a style="font-size: x-large;margin-left: 3%;font-family: fantasy;">3.在原有的浏览器新开一个页面，把刚刚复制的链接粘贴并打开，这个时候打开考试辅助，把刚刚的token,paperid贴进去并执行程序。-->
+            <!--                执行完之后点击页面的开始考试，这个时候应该所有题目均已经作答，可以选择直接提交试卷，也可以通过接口检查一下答案！</a>-->
+            <!--            <img th:src="@{/images/help1.jpg}" alt="..." style="width: 90%;"><br>-->
+
+
+        </div>
+
+        <!-- top tiles -->
+
+        <!-- /top tiles -->
+
+
+        <!-- /page content -->
+
+        <!-- footer content -->
+
+        <!-- /footer content -->
+    </div>
+</div>
+</div>
+<script th:src="@{/js/build/custom.min.js}"></script>
+<script th:src="@{/js/common/main.js}"></script>
+</body>
+</html>

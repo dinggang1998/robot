@@ -3,7 +3,7 @@ logging:
     root: INFO
 
 server:
-  port: 8080
+  port: 8085
 
 spring:
   cloud:

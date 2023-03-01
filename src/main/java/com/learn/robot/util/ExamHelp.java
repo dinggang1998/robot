@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.learn.robot.exception.RobotException;
 import com.learn.robot.model.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -41,15 +42,19 @@ public class ExamHelp {
      * flag用以区分，单选多选主观三种题型答题方法不同
      * 单选只需拿answerlist里一个ID，多选拿多个，主观拿answerlist里一个content
      **/
-    public static StringBuffer postWithJson(String paperId, String token,int mills) throws SerialException, Exception {
+    public static StringBuffer postWithJson(String paperId, String token,String mill) throws SerialException, Exception {
         StringBuffer text=new StringBuffer();
         try{
+            int mills=0;
+            if(StringUtils.isNotBlank(mill)){
+                mills=Integer.valueOf(mill);
+            }
             JSONObject request = new JSONObject();
             request.put("id", paperId);
             JSONObject data = post(request, "http://221.11.103.120:8101/exam/api/paper/paper/paper-detail", paperId, token, cookie, userAgent);
 
             if(data.get("userId_dictText")==null){
-                throw RobotException.serviceException("500","用户token或paper失效","");
+                throw RobotException.serviceException("500","用户token或paper失效,请核对后再来","");
             }
 
             log.info(data.toString());
@@ -110,7 +115,7 @@ public class ExamHelp {
         if ("1".equals(flag)) {
             list = getchoose(num, list, answerList,text);
         }else if("2".equals(flag)){
-            String content=answerList.get(num).getAsJsonObject().get("content").toString().replaceAll("\"", "");
+            String content=answerList.get(num).getAsJsonObject().get("content").toString().replaceAll("\"", "").replaceAll("\\\\n","");
             answers=content.contains("无")?"不了解" : content;
         }else {
             list.add(answerList.get(num).getAsJsonObject().get("id").toString().replaceAll("\"", ""));

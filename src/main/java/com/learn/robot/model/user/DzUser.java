@@ -74,7 +74,14 @@ public class DzUser extends Model<DzUser> {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
+    public DzUser() {
+    }
 
+    public DzUser(String id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+    }
 
     @Override
     protected Serializable pkVal() {

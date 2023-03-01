@@ -61,7 +61,7 @@
             return;
         }
 
-        if (!!$("#mills").val() && !($("#mills").val() < 400 && $("#mills").val() > 0)) {
+        if (!!$("#mills").val() && !($("#mills").val() <= 5 && $("#mills").val() >= 0)) {
             swal.fire('失败!', '请输入0-5之间的等待时间或不输入', 'error');
             return;
         }
@@ -89,7 +89,8 @@
                 }
             },
             error: function () {
-                window.location.href = getRealPath() + "/500";
+                swal.fire('失败!', '接口请求失败', 'error');
+                // window.location.href = getRealPath() + "/500";
             }
         });
     }
