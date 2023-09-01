@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("")
 public class ExamController {
 
-    @Autowired
+    @Resource
     ExamService examService;
 
     @RequestMapping(method = RequestMethod.GET, value = {"exam"})
