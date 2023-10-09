@@ -17,112 +17,100 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Autuor StevenDing
+ * CreateTime 2023/10/08 15:10:21
+ * 修改storyListPath为导出的需要写自测报告的用户故事文档路径
+ * 修改savePath为你要保存的路径
+ * 修改下面的用户信息
+ * */
 public class ExcelHelp {
 
     //自测报告范本路径
-    public static String oldExcelPath = "/Users/dinggang/Downloads/test11.xls";
+    public static String oldExcelPath = "src/main/resources/file/自测报告模版.xlsx";
     //导出需要生成自测报告的excel路径
-    public static String storyListPath = "/Users/dinggang/Downloads/test.xls";
+    public static String storyListPath = "/Users/dinggang/Downloads/2023-10-09一键导出20231009124200.xlsx";
     //导出后的保存路径
-    public static String savePath = "/Users/dinggang/Downloads/etst/";
+    public static String savePath = "/Users/dinggang/Downloads/生成的自测报告/";
     //操作者姓名
     public static String userName = "丁罡";
+    //操作者手机号
+    public static String userPhone = "15861334359";
+    //操作者邮箱
+    public static String userEmail = "dinggang@asiainfo.com";
+    //需要替换的标题里的字符串（可自行增加）
+    public static String[] replaceStr = {"—", "UI前后台专题", "-", "\t", "\\.", "（补）"};
 
 
     public static void main(String[] args) throws Exception {
 
         List<ExcelDemo> excelDemoList = new ArrayList<ExcelDemo>();
-        Sheet sheet = readExcel(storyListPath, 0);
+        Sheet sheet = readExcel(storyListPath).getSheetAt(0);
 
         for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             // 循环读取每一个格
-            Row row = sheet.getRow(i);
-            Cell cellId = row.getCell(1);
-            cellId.setCellType(CellType.STRING);
-            String id = cellId.getStringCellValue();
-
-            Cell cellTitle = row.getCell(3);
-            cellTitle.setCellType(CellType.STRING);
-            String title = cellTitle.getStringCellValue();
-
-            ExcelDemo excelDemo = new ExcelDemo();
-            excelDemo.setStoryId(id);
-            excelDemo.setStoryTitle(title);
-            excelDemoList.add(excelDemo);
+            excelDemoList.add(new ExcelDemo(getCell(sheet, i, 1), getCell(sheet, i, 3)));
         }
+
+        //把目录先删除再建
+        File desFilePath = new File(savePath);
+        deleteDirectory(desFilePath);
+        desFilePath.mkdirs();
+
         if (!CollectionUtils.isEmpty(excelDemoList)) {
             for (ExcelDemo excelDemo : excelDemoList) {
-
-                String newTitle = excelDemo.getStoryTitle().replaceAll("—", "").replaceAll("UI前后台专题", "")
-                        .replace("-", "").replaceAll("\t", "").replaceAll("\\.", "-");
-                String newExcelName = excelDemo.getStoryId() + "+" + userName + "+" + newTitle +
-                        "+开发测试说明.xls";
-                copyFile(oldExcelPath, savePath + newExcelName);
-
-                String path = savePath + newExcelName;
-                InputStream inputStream = new FileInputStream(path);
-                Workbook workbook = null;
-                if (path.substring(Integer.valueOf(path.lastIndexOf(".")) + 1).equals("xls")) {
-                    workbook = new HSSFWorkbook(inputStream);
-                } else if (path.substring(Integer.valueOf(path.lastIndexOf(".")) + 1).equals("xlsx")) {
-                    workbook = new XSSFWorkbook(inputStream);
+                //定义自测报告名称
+                String newTitle = excelDemo.getStoryTitle();
+                for (String str : Arrays.asList(replaceStr)) {
+                    newTitle = newTitle.replaceAll(str, "");
                 }
+                String newExcelName = excelDemo.getStoryId() + "+" + userName + "+" + newTitle + "+开发测试说明.xlsx";
+                //复制生成自测报告
+                copyFile(oldExcelPath, savePath + newExcelName);
+                //对自测报告内容进行修改
+                Workbook workbook = readExcel(savePath + newExcelName);
                 Sheet newSheet = workbook.getSheetAt(1);
+                changeCell(newSheet, 0, 3, userName);
+                changeCell(newSheet, 1, 8, userEmail);
+                changeCell(newSheet, 1, 11, userPhone);
+                changeCell(newSheet, 2, 1, newTitle);
+                changeCell(newSheet, 4, 1, newTitle);
+                changeCell(newSheet, 7, 1, newTitle);
+                changeCell(newSheet, 9, 1, newTitle);
 
-                Row row2 = newSheet.getRow(2);
-                Cell cell2 = row2.getCell(1);
-                cell2.setCellType(CellType.STRING);
-                cell2.setCellValue(newTitle);
-
-                Row row4 = newSheet.getRow(4);
-                Cell cell4 = row4.getCell(1);
-                cell4.setCellType(CellType.STRING);
-                cell4.setCellValue(newTitle);
-
-                Row row7 = newSheet.getRow(7);
-                Cell cell7 = row7.getCell(1);
-                cell7.setCellType(CellType.STRING);
-                cell7.setCellValue(newTitle);
-
-                Row row9 = newSheet.getRow(9);
-                Cell cell9 = row9.getCell(1);
-                cell9.setCellType(CellType.STRING);
-                cell9.setCellValue(newTitle);
-
-                FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(savePath + newExcelName));
                 workbook.write(fileOutputStream); // 将Workbook写入文件
                 fileOutputStream.close();
 
-                System.out.println("执行结束！");
+                System.out.println(newExcelName + "------执行结束！");
 
+                //将自测报告进行上传(该功能未开发完善)
+//                upload(savePath + newExcelName);
             }
         }
-
-//        InputStream inputStream = new FileInputStream("/Users/dinggang/Downloads/etst/338338+丁罡+数据权限管理选择域权及增加授权功能+开发测试说明.xls");
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.put("file",inputStream);
-//        jsonObject.put("version","1");
-//        post(jsonObject,"https://uims.tg.unicom.local/pm/fileController/fileUploadInfo","","uuid=89100; canOpen=1; ttUserId=c0ee96d074574d309f6a35830eb7aa88; JSESSIONID=5382CBF094F18A281B4AC189E650CA94; defaultAccount=true; sessionId=40c5dc7b32a34d53bbefae94d03; jeesite.session.id=OTE0ZmMyN2ItODdmYi00NDdmLTk2Y2UtNTRiZGFjMWM4M2I1; accessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc1Jvb3QiOiIwIiwiYWNjb3VudE5hbWUiOiJtYWw2NS03IiwicmVmcmVzaFRpbWUiOjE4MCwiaXNzIjoiY3Vzb2Z0d2FyZSIsIm1vYmlsZSI6IjEzMDE2NTQzMDIwIiwidXNlck5hbWUiOiJkaW5nZ2FuZyIsImFjY2Vzc1Rva2VuIjoiY2JhMDc2NjRmOWVlNDYzZDhhYzU1NjY3NjgxYjA5MmUiLCJ1c2VySUQiOiI2Mzc0ODM5NTgxMjgiLCJ0dFVzZXJJZCI6ImMwZWU5NmQwNzQ1NzRkMzA5ZjZhMzU4MzBlYjdhYTg4IiwiYWNjb3VudElEIjoiMjA0MTE5MjQ4NDQxIiwiaXNFbmFibGVDb25zb2xlIjoiMSIsImlkIjoiYzBlZTk2ZDA3NDU3NGQzMDlmNmEzNTgzMGViN2FhODgiLCJleHAiOjE2OTY3NTE4NjQsImVtYWlsIjoiZGluZ2dhbmdAYXNpYWluZm8uY29tIiwiaXNFbmFibGVQcm9ncmFtIjoiMSJ9.HRcittfTBUkFDIULg6-NbAJVnYNYFQORdPBqA-VA9cczL73SAFpfWl11TkcYXkF385zBSJvbC9BMbEDMiNlZMg; defaultApp=true; lcdpAccessToken=7ff329cc-957e-4e8d-a0ef-f42530973edf");
-
     }
 
-    public static Sheet readExcel(String path, int num) {
-        Sheet sheet = null;
+    public static Workbook readExcel(String path) {
+        Workbook workbook = null;
         try {
             InputStream inputStream = new FileInputStream(path);
-            Workbook workbook = null;
-            if (path.substring(Integer.valueOf(path.lastIndexOf(".")) + 1).equals("xls")) {
-                workbook = new HSSFWorkbook(inputStream);
-            } else if (path.substring(Integer.valueOf(path.lastIndexOf(".")) + 1).equals("xlsx")) {
-                workbook = new XSSFWorkbook(inputStream);
+            switch (path.substring(path.lastIndexOf(".") + 1)) {
+                case "xls":
+                    workbook = new HSSFWorkbook(inputStream);
+                    break;
+                case "xlsx":
+                    workbook = new XSSFWorkbook(inputStream);
+                    break;
+                default:
+                    break;
             }
-            sheet = workbook.getSheetAt(num);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return sheet;
+        return workbook;
     }
 
     private static void copyFile(String sourceFileNameStr, String desFileNameStr) {
@@ -130,9 +118,8 @@ public class ExcelHelp {
         File desFile = new File(desFileNameStr);
         try {
             copyFileDetail(srcFile, desFile);
-//            System.out.println("复制完成:" + desFile);
         } catch (IOException e) {
-//            System.err.println("复制失败:" + desFile + e.getMessage().substring(e.getMessage().indexOf("(")));
+            System.err.println("复制失败:" + desFile + e.getMessage().substring(e.getMessage().indexOf("(")));
         }
     }
 
@@ -162,7 +149,47 @@ public class ExcelHelp {
         }
     }
 
-    public static JSONObject post(JSONObject request, String url, String token, String cookie) throws IOException, Exception {
+    public static String getCell(Sheet sheet, int RowNum, int CellNum) {
+        Row row = sheet.getRow(RowNum);
+        Cell cell = row.getCell(CellNum);
+        cell.setCellType(CellType.STRING);
+        return cell.getStringCellValue();
+    }
+
+    public static void changeCell(Sheet sheet, int RowNum, int CellNum, String context) {
+        Row row = sheet.getRow(RowNum);
+        Cell cell = row.getCell(CellNum);
+        cell.setCellType(CellType.STRING);
+        cell.setCellValue(context);
+    }
+
+    public static boolean deleteDirectory(File directory) {
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null && files.length > 0) {
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        deleteDirectory(file);
+                    } else {
+                        file.delete();
+                    }
+                }
+            }
+        }
+        return directory.delete();
+    }
+
+    public static void upload(String path) throws Exception {
+        InputStream inputStream = new FileInputStream(path);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("file", inputStream);
+        jsonObject.put("version", "1");
+        post(jsonObject, "https://uims.tg.unicom.local/pm/fileController/fileUploadInfo", "", "");
+    }
+
+
+    public static JSONObject post(JSONObject request, String url, String token, String cookie) throws IOException,
+            Exception {
         HttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
         httpPost.addHeader("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundary8jjfAm3qDPK7U4XB");
@@ -189,8 +216,14 @@ public class ExcelHelp {
 
     @Data
     public static class ExcelDemo {
+
         private String storyId;
         private String storyTitle;
+
+        public ExcelDemo(String storyId, String storyTitle) {
+            this.storyId = storyId;
+            this.storyTitle = storyTitle;
+        }
     }
 
 }
