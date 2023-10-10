@@ -32,7 +32,7 @@ public class ExcelHelp {
     //自测报告范本路径
     public static String oldExcelPath = "src/main/resources/file/自测报告模版.xlsx";
     //导出需要生成自测报告的excel路径
-    public static String storyListPath = "/Users/dinggang/Downloads/2023-10-09一键导出20231009124200.xlsx";
+    public static String storyListPath = "/Users/dinggang/Downloads/2023-10-11一键导出20231011002731.xlsx";
     //导出后的保存路径
     public static String savePath = "/Users/dinggang/Downloads/生成的自测报告/";
     //操作者姓名
@@ -42,7 +42,8 @@ public class ExcelHelp {
     //操作者邮箱
     public static String userEmail = "dinggang@asiainfo.com";
     //需要替换的标题里的字符串（可自行增加）
-    public static String[] replaceStr = {"—", "UI前后台专题", "-", "\t", "\\.", "（补）"};
+    public static String[] replaceStr = {"—", "UI前后台专题", "-", "\t", "\\.", "（补）","3212"," ","1024", "（","）",
+    "1","2","3","4","5","6","7","8","9","10","山西感知运营","陈柏","32111",};
 
 
     public static void main(String[] args) throws Exception {
@@ -153,7 +154,7 @@ public class ExcelHelp {
         Row row = sheet.getRow(RowNum);
         Cell cell = row.getCell(CellNum);
         cell.setCellType(CellType.STRING);
-        return cell.getStringCellValue();
+        return cell.getStringCellValue().replaceAll("\\.0","");
     }
 
     public static void changeCell(Sheet sheet, int RowNum, int CellNum, String context) {
