@@ -16,9 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.util.CollectionUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Autuor StevenDing
@@ -26,13 +24,13 @@ import java.util.List;
  * 修改storyListPath为导出的需要写自测报告的用户故事文档路径
  * 修改savePath为你要保存的路径
  * 修改下面的用户信息
- * */
+ */
 public class ExcelHelp {
 
     //自测报告范本路径
     public static String oldExcelPath = "src/main/resources/file/自测报告模版.xlsx";
     //导出需要生成自测报告的excel路径
-    public static String storyListPath = "/Users/dinggang/Downloads/2023-10-11一键导出20231011002731.xlsx";
+    public static String storyListPath = "/Users/dinggang/Downloads/2023-10-19一键导出20231019144508.xlsx";
     //导出后的保存路径
     public static String savePath = "/Users/dinggang/Downloads/生成的自测报告/";
     //操作者姓名
@@ -42,8 +40,27 @@ public class ExcelHelp {
     //操作者邮箱
     public static String userEmail = "dinggang@asiainfo.com";
     //需要替换的标题里的字符串（可自行增加）
-    public static String[] replaceStr = {"—", "UI前后台专题", "-", "\t", "\\.", "（补）","3212"," ","1024", "（","）",
-    "1","2","3","4","5","6","7","8","9","10","山西感知运营","陈柏","32111",};
+    public static String[] replaceStr = {
+            "-", "—", "\t", "\\.", " ", "（", "）", "、",
+            "UI前后台专题", "（补）", "关于", "需求", "3212", "菜单",
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0"
+    };
+    //需要保护的标题里的字符串（可自行增加）(2.0可能导致文件上传格式不对，仅测试时使用)
+    public static String[] saveStr = {
+            "2.0菜单", "2.0"
+    };
+    //需要保护的标题里的字符串替换后的字符串
+    public static String[] lastSaveStr = {
+            "2-0菜单", "2-0"
+    };
+
+
+//    //操作者姓名
+//    public static String userName = "顾明辉";
+//    //操作者手机号
+//    public static String userPhone = "15251812986";
+//    //操作者邮箱
+//    public static String userEmail = "gumh@asiainfo.com";
 
 
     public static void main(String[] args) throws Exception {
@@ -53,7 +70,7 @@ public class ExcelHelp {
 
         for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
             // 循环读取每一个格
-            excelDemoList.add(new ExcelDemo(getCell(sheet, i, 1), getCell(sheet, i, 3)));
+            excelDemoList.add(new ExcelDemo(getCell(sheet, i, 1, true), getCell(sheet, i, 3)));
         }
 
         //把目录先删除再建
@@ -64,10 +81,10 @@ public class ExcelHelp {
         if (!CollectionUtils.isEmpty(excelDemoList)) {
             for (ExcelDemo excelDemo : excelDemoList) {
                 //定义自测报告名称
-                String newTitle = excelDemo.getStoryTitle();
-                for (String str : Arrays.asList(replaceStr)) {
-                    newTitle = newTitle.replaceAll(str, "");
-                }
+                String newTitle = dealString(excelDemo.getStoryTitle(), Arrays.asList(replaceStr),
+                        Arrays.asList(saveStr), Arrays.asList(lastSaveStr));
+                System.out.println(newTitle);
+
                 String newExcelName = excelDemo.getStoryId() + "+" + userName + "+" + newTitle + "+开发测试说明.xlsx";
                 //复制生成自测报告
                 copyFile(oldExcelPath, savePath + newExcelName);
@@ -154,7 +171,15 @@ public class ExcelHelp {
         Row row = sheet.getRow(RowNum);
         Cell cell = row.getCell(CellNum);
         cell.setCellType(CellType.STRING);
-        return cell.getStringCellValue().replaceAll("\\.0","");
+        return cell.getStringCellValue();
+    }
+
+    public static String getCell(Sheet sheet, int RowNum, int CellNum, boolean isNum) {
+        Row row = sheet.getRow(RowNum);
+        Cell cell = row.getCell(CellNum);
+        cell.setCellType(CellType.STRING);
+        return !isNum ? cell.getStringCellValue()
+                : cell.getStringCellValue().replaceAll("\\.0", "");
     }
 
     public static void changeCell(Sheet sheet, int RowNum, int CellNum, String context) {
@@ -214,6 +239,36 @@ public class ExcelHelp {
         }
     }
 
+    public static String dealString(String newTitle, List<String> replaceStr, List<String> saveStr,
+                                    List<String> lastSaveStr) {
+        //用于反解密保护的字符串（不能修改）
+        List<String> forSaveStrList = new LinkedList<>();
+        //加密保护字符串
+        for (int i = 0; i < Arrays.asList(saveStr).size(); i++) {
+            String forSaveStr = generateRandomLowercase(6);
+            forSaveStrList.add(forSaveStr);
+            newTitle = newTitle.replaceAll(saveStr.get(i), forSaveStr);
+        }
+        for (String str : replaceStr) {
+            newTitle = newTitle.replaceAll(str, "");
+        }
+        //反解密保护字符串
+        for (int i = 0; i < Arrays.asList(lastSaveStr).size(); i++) {
+            newTitle = newTitle.replaceAll(forSaveStrList.get(i), lastSaveStr.get(i));
+        }
+        return newTitle;
+    }
+
+    public static String generateRandomLowercase(int length) {
+        String chars = "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb.toString();
+    }
 
     @Data
     public static class ExcelDemo {
@@ -226,6 +281,5 @@ public class ExcelHelp {
             this.storyTitle = storyTitle;
         }
     }
-
 }
 
