@@ -11,6 +11,7 @@ import com.learn.robot.service.user.UserService;
 import com.learn.robot.util.*;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,19 +21,79 @@ import org.springframework.cglib.proxy.Proxy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
+import java.io.*;
 import java.security.PublicKey;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = RobotApplication.class,webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = RobotApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 //@SpringBootTest
 public class RobotApplicationTests extends TestCase {
 
     @Autowired
     private EmailUtil emailUtil;
+
+    @Autowired
+    DzUserMapper dzUserMapper;
+
+    public  String patchFile="/Users/dinggang/Desktop/bto_filter_propty.sql";//补丁文件,由eclipse svn plugin生成(非必须)
+
+    @Test
+    public void insertQuick() throws IOException {
+        FileInputStream f = new FileInputStream(patchFile);
+        BufferedReader dr = new BufferedReader(new InputStreamReader(f, "GBK"));
+        String line;
+        while ((line = dr.readLine()) != null) {
+            if (!line.isEmpty()) {
+                System.out.println(line);
+                dzUserMapper.insertSql(line);
+            }
+        }
+        dr.close();
+    }
+    @Test
+    public void createCreateTableSql() {
+        List<String> tableList = dzUserMapper.getAllTable();
+        for(String tableName:tableList){
+//            System.out.println(tableName.replaceAll("SHOW CREATE","DROP"));
+            Map<String, String> test = dzUserMapper.getTable(tableName);
+            String createTable = test.get("Create Table");
+            System.out.println(createTable+";");
+            System.out.println("#######################################");
+        }
+    }
+
+
+    @Test
+    public void createInsertSql() {
+//        List<String> tableList=new ArrayList<>();
+//        tableList.add("a_env");
+        List<String> tableList = dzUserMapper.getTables();
+        tableList =tableList.stream().filter(o -> (o.startsWith("bto_") || o.startsWith("td_"))&& !o.equals("bto_filter_propty")).collect(Collectors.toList());
+        System.out.println(tableList);
+        for (String tableName : tableList) {
+            List<String> columnList = dzUserMapper.getColumnList(tableName);
+            List<String> columnListNew = new ArrayList<>();
+            for (String column : columnList) {
+                columnListNew.add("coalesce(" + column + ",'')");
+            }
+            String column = String.join(", ", columnList);
+            List<String> valuesList = dzUserMapper.getTableValue(String.join(", ", columnListNew).replaceAll(", ", "," +
+                    "'ACD, ACD',"), tableName);
+            System.out.println("###############################插入表" + tableName + "的数据###############################");
+            String deleteSql="DELETE FROM " + tableName + " WHERE 1=1;";
+            System.out.println(deleteSql);
+//            dzUserMapper.deleteSql(deleteSql);
+            for (String value : valuesList) {
+                String insertSql="INSERT INTO i_delvs.`" + tableName + "` (" + column + ") VALUES (" + value.replaceAll("ACD", "'").replaceAll("''","null") + ");";
+                System.out.println(insertSql);
+//                dzUserMapper.insertSql(insertSql);
+            }
+        }
+    }
 
     @Test
     public void dingDingTest() {
@@ -61,7 +122,7 @@ public class RobotApplicationTests extends TestCase {
         ArrayList<Object> objects = new ArrayList<>();
         objects.add(testttt1);
         objects.add(testttt2);
-        map.put("2",objects);
+        map.put("2", objects);
 
 
         JSONObject resultDev = JSON.parseObject(JSONObject.toJSONString(map), JSONObject.class);
@@ -73,20 +134,20 @@ public class RobotApplicationTests extends TestCase {
         if (resultList != null && !resultList.isEmpty()) {
             log.info("!211");
 
-        JSONObject resultDevelop = (JSONObject) (resultList.get(0));
+            JSONObject resultDevelop = (JSONObject) (resultList.get(0));
             log.info(String.valueOf(resultDevelop));
 
         }
         JSONObject object = new JSONObject();
-            JSONObject tempItem = (JSONObject) object.clone();
+        JSONObject tempItem = (JSONObject) object.clone();
 
         Map<Object, String> maps = new LinkedHashMap<>();
-        maps.put("1","2");
+        maps.put("1", "2");
 
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("1","2");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("1", "2");
 
-        JSONArray s=new JSONArray();
+        JSONArray s = new JSONArray();
         s.add(jsonObject);
 
         log.info(String.valueOf(maps));
@@ -94,7 +155,7 @@ public class RobotApplicationTests extends TestCase {
         log.info(String.valueOf(jsonObject));
 
         log.info(String.valueOf(s.get(0)));
-        JSONObject ssss=(JSONObject) JSON.toJSON(s.get(0));
+        JSONObject ssss = (JSONObject) JSON.toJSON(s.get(0));
 //        JSONObject sss=(JSONObject) s.get(0);
 //        s.get(0);
 
@@ -137,19 +198,17 @@ public class RobotApplicationTests extends TestCase {
     @Autowired
     UserService userService;
 
-    @Autowired
-    DzUserMapper dzUserMapper;
 
     @Test
-    public void test3(){
-        List<DzUser> userList= dzUserMapper.selectAll();
+    public void test3() {
+        List<DzUser> userList = dzUserMapper.selectAll();
         System.out.println(userList.get(0).toString());
     }
 
     @Test
     public void test9() throws Exception {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("1","ding11231232132131232");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("1", "ding11231232132131232");
         serect(jsonObject);
     }
 
@@ -186,20 +245,21 @@ public class RobotApplicationTests extends TestCase {
 
     @Test
     @Transactional
-    public void test12321(){
-        RedWineFactory redWineFactory=new RedWineFactory();
-        SellProxyFactory sellProxyFactory=new SellProxyFactory(redWineFactory);
-        SellWine sellWine=(SellWine)Proxy.newProxyInstance(redWineFactory.getClass().getClassLoader(),redWineFactory.getClass().getInterfaces(),sellProxyFactory);
+    public void test12321() {
+        RedWineFactory redWineFactory = new RedWineFactory();
+        SellProxyFactory sellProxyFactory = new SellProxyFactory(redWineFactory);
+        SellWine sellWine = (SellWine) Proxy.newProxyInstance(redWineFactory.getClass().getClassLoader(),
+                redWineFactory.getClass().getInterfaces(), sellProxyFactory);
         sellWine.sellWine(1231312);
     }
 
     @Test
-    public void test13123(){
-        String s=null;
+    public void test13123() {
+        String s = null;
 
-        if(!(2==3)||!(s.equals("1"))
+        if (!(2 == 3) || !(s.equals("1"))
 
-                ){
+        ) {
             System.out.println("1");
         }
     }
