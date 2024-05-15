@@ -1,7 +1,7 @@
 package com.learn.robot.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.learn.robot.model.Exam;
-import com.learn.robot.util.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-06-06
  */
 @Mapper
-public interface ExamMapper extends MyMapper<Exam> {
+public interface ExamMapper extends BaseMapper<Exam> {
 
 }

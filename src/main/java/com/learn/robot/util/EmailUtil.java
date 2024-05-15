@@ -94,6 +94,24 @@ public class EmailUtil {
         mailSender.send(mimeMessage);
     }
 
+    public void sendMessageCarryFile(String to, String subject, String content, File[] files) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            helper.setFrom(from); // 设置发送发
+            helper.setTo(to); // 设置接收方
+            helper.setSubject(subject); // 设置邮件主题
+            helper.setText(content); // 设置邮件内容
+            for (File file : files) {
+                helper.addAttachment(file.getName(), file); // 逐个添加附件
+            }
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        // 发送邮件
+        mailSender.send(mimeMessage);
+    }
+
     public String getFrom() {
         return from;
     }

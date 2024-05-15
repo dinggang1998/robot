@@ -15,10 +15,10 @@ spring:
         namespace: public
   #数据库mysql8配置
   datasource:
-    url: jdbc:mysql://rm-bp1n4l8b76qf5z4e2zo.mysql.rds.aliyuncs.com:3306/stevending?serverTimezone=UTC&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
-    username: stevending
-    password: slyWOAINI1314
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.124.143.154:22079/i_delvs?pinGlobalTxToPhysicalConnection=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
+    username: i_delvs
+    password: XvVhA8acbQI5VBK2HD0N
+    driver-class-name: com.mysql.jdbc.Driver
     druid:
       test-while-idle: true
       time-between-eviction-runs-millis: 60000

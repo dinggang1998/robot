@@ -1,5 +1,7 @@
 package com.learn.robot.service.login.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.learn.robot.exception.RobotException;
 import com.learn.robot.exception.ServiceException;
 import com.learn.robot.enums.ServiceExceptionEnum;
@@ -42,11 +44,7 @@ public class LoginServiceImpl implements LoginService {
         if (StringUtils.isBlank(username) || StringUtils.isBlank(pwd)) {
             throw RobotException.serviceException(ServiceExceptionEnum.ILLEGAL_PARAM);
         }
-        Example example = new Example(DzUser.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("username", username);
-        List<DzUser> userList=dzUserMapper.selectByExample(example);
-
+        List<DzUser> userList = dzUserMapper.selectList(Wrappers.<DzUser>lambdaQuery().eq(DzUser::getUsername, username));
         if (CollectionUtils.isNotEmpty(userList)) {
             DzUser user = userList.get(0);
             log.info("User info = {}", user);
@@ -131,12 +129,11 @@ public class LoginServiceImpl implements LoginService {
         Example example = new Example(DzUser.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("userNo", userNo);
-
         DzUser dzUser=new DzUser();
         dzUser.setLoginattemps(loginattemps);
         dzUser.setLockType(lockType);
         dzUser.setLoginTime(new Date());
-        dzUserMapper.updateByExampleSelective(dzUser,example);
+        dzUserMapper.update(dzUser,new UpdateWrapper<>(dzUser));
     }
 
 }

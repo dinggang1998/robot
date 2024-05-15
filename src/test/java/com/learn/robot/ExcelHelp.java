@@ -30,7 +30,7 @@ public class ExcelHelp {
     //自测报告范本路径
     public static String oldExcelPath = "src/main/resources/file/自测报告模版.xlsx";
     //导出需要生成自测报告的excel路径
-    public static String storyListPath = "/Users/dinggang/Downloads/2023-10-19一键导出20231019144508.xlsx";
+    public static String storyListPath = "/Users/dinggang/Downloads/2024-03-26一键导出20240326161448.xlsx";
     //导出后的保存路径
     public static String savePath = "/Users/dinggang/Downloads/生成的自测报告/";
     //操作者姓名
@@ -41,9 +41,10 @@ public class ExcelHelp {
     public static String userEmail = "dinggang@asiainfo.com";
     //需要替换的标题里的字符串（可自行增加）
     public static String[] replaceStr = {
-            "-", "—", "\t", "\\.", " ", "（", "）", "、",
+            "-", "—", "\t", "\\.", " ", "（", "）", "、",">",",",
             "UI前后台专题", "（补）", "关于", "需求", "3212", "菜单",
-            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0"
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "0",
+            "配合测试","配合验证","LX","/","【老】"
     };
     //需要保护的标题里的字符串（可自行增加）(2.0可能导致文件上传格式不对，仅测试时使用)
     public static String[] saveStr = {
@@ -83,8 +84,6 @@ public class ExcelHelp {
                 //定义自测报告名称
                 String newTitle = dealString(excelDemo.getStoryTitle(), Arrays.asList(replaceStr),
                         Arrays.asList(saveStr), Arrays.asList(lastSaveStr));
-                System.out.println(newTitle);
-
                 String newExcelName = excelDemo.getStoryId() + "+" + userName + "+" + newTitle + "+开发测试说明.xlsx";
                 //复制生成自测报告
                 copyFile(oldExcelPath, savePath + newExcelName);

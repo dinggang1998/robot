@@ -1,6 +1,7 @@
 package com.learn.robot.util;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -51,14 +52,15 @@ public class DingTalkUtil {
             jsonObject.put("markdown", markdown);
             JSONObject at = new JSONObject();
             at.put("isAtAll", isAtAll);
+            JSONArray atMobiles = new JSONArray();
+            atMobiles.add("15861334359");
+            at.put("atMobiles", atMobiles);
             jsonObject.put("at", at);
             HttpClient httpClient = HttpClients.createDefault();
-//            HttpPost httpPost = new HttpPost(getSign());
             HttpPost httpPost = new HttpPost(url);
             httpPost.addHeader("Content-Type", "application/json; charset=utf-8");
             httpPost.setEntity(new StringEntity(jsonObject.toJSONString(), "utf-8"));
             HttpResponse execute = httpClient.execute(httpPost);
-
             if (execute.getStatusLine().toString().contains("200")) {
                 return execute.toString();
             }
